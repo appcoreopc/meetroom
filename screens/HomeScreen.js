@@ -17,6 +17,11 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
+  navigateDefaultScreen = () =>  {
+    alert('test');
+    this.props.navigation.navigate('DefaultScreen');
+  }
   
   render() {
     return (
@@ -38,14 +43,14 @@ export default class HomeScreen extends React.Component {
       <View style={styles.viewButton}> 
       <Button style={styles.defaultButton} onPress={()=> {
         alert('test');
-      }} title="Learn More" accessibilityLabel="Learn more about this purple button"
+      }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
       </View>
       
       <View style={styles.viewButton}>      
       <Button style={styles.defaultButton} onPress={()=> {
-        alert('test');
-      }} title="Learn More" accessibilityLabel="Learn more about this purple button"
+         this.props.navigation.navigate('DefaultScreen');
+      }} title="Schedule" accessibilityLabel="Learn more about this purple button"
       />          
       
       </View>           

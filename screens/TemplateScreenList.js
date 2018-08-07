@@ -11,7 +11,7 @@ import {
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
-import { Icon, List, ListItem, Avatar } from 'react-native-elements';
+import { Icon, List, ListItem } from 'react-native-elements';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -43,25 +43,17 @@ export default class HomeScreen extends React.Component {
         {
           this.list.map((l, i) => (
 
-            <ListItem     
-
+            <ListItem
+              roundAvatar
+              avatar={{uri:l.avatar_url}}
               key={i}
               title={l.name}
-              subtitle={
-              <View>
-                <Text style={{fontSize:12, color:'#787d87'}}> {l.subtitle} </Text> 
-              </View>             
-              }
-
-              rightIcon={{name: 'flight-takeoff'}}
-              avatar={<Avatar
-                rounded
-                source={{uri:l.avatar_url}}             
-              />}
+              leftIcon={{name: l.icon}}
             />
           ))
+
         }
-    </List>
+</List>
      
       
       </View>
