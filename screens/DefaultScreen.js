@@ -44,6 +44,7 @@ export default class HomeScreen extends React.Component {
         {
           this.list.map((l, i) => (
 
+
             <ListItem     
               key={i}
               title={              
@@ -53,13 +54,14 @@ export default class HomeScreen extends React.Component {
               }
               subtitle={
               <View style={{paddingTop: 6}}>
-                <Text style={{fontSize:10, color:'#d2d6f3'}}> {l.subtitle} </Text> 
+                <Text style={{fontSize:11, color:'#d2d6f3'}}> {l.subtitle} </Text> 
               </View>             
               }
 
               rightIcon={
               <View>               
                 <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
+                <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
               </View>   
 
               }
