@@ -30,28 +30,30 @@ export default class HomeScreen extends React.Component {
       avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
       subtitle: 'Vice Chairman',
       icon: 'flight-takeoff'
-
     },
   ];  
-  
+    
   render() {
     
     return (
-      <View style={styles.container}>
+      <View style={styles.containerSchedule}>
+
+      <Text style={{fontSize: 18, color:'#3a4354', fontWeight : 'bold'}}> My Schedule </Text> 
 
       <List containerStyle={{marginBottom: 20}}>
         {
           this.list.map((l, i) => (
 
             <ListItem     
-
               key={i}
-              title={<View>
-                <Text style={{fontSize:14, color:'#3a4354'}}> {l.name} </Text> 
-              </View>    }
-              subtitle={
+              title={              
               <View>
-                <Text style={{fontSize:10, color:'#787d87'}}> {l.subtitle} </Text> 
+                <Text style={{fontSize:14, color:'#3a4354'}}> {l.name} </Text> 
+              </View>    
+              }
+              subtitle={
+              <View style={{paddingTop: 6}}>
+                <Text style={{fontSize:10, color:'#d2d6f3'}}> {l.subtitle} </Text> 
               </View>             
               }
 

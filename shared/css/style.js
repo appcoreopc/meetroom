@@ -22,6 +22,11 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   }, 
+  containerSchedule: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop : 30
+  }, 
   
   mainIconContainer: {
     alignItems: 'center',display: 'flex',
