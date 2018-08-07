@@ -46,18 +46,22 @@ export default class HomeScreen extends React.Component {
             <ListItem     
 
               key={i}
-              title={l.name}
+              title={<View>
+                <Text style={{fontSize:14, color:'#3a4354'}}> {l.name} </Text> 
+              </View>    }
               subtitle={
               <View>
-                <Text style={{fontSize:12, color:'#787d87'}}> {l.subtitle} </Text> 
+                <Text style={{fontSize:10, color:'#787d87'}}> {l.subtitle} </Text> 
               </View>             
               }
 
-              rightIcon={{name: 'flight-takeoff'}}
-              avatar={<Avatar
-                rounded
-                source={{uri:l.avatar_url}}             
-              />}
+              rightIcon={
+              <View>               
+                <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
+              </View>   
+
+              }
+             
             />
           ))
         }
