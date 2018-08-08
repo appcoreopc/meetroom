@@ -16,9 +16,11 @@ export const styles = StyleSheet.create({
  viewButton : { 
     marginLeft:26, marginRight : 26, marginBottom : 10
   },
-  listItemBorderLight : { 
-    borderTopColor : '#efefef', 
-    borderBottomColor : '#efefef',
+  containerLightBorder : {
+    marginBottom: 20, borderColor : '#efefef'
+  },
+  bottomBorderLight : {  
+    borderBottomColor : '#efefef'
   },    
   container: {
     flex: 1,

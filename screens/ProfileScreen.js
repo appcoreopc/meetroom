@@ -41,8 +41,8 @@ export default class HomeScreen extends React.Component {
       <View style={styles.containerSchedule}>
 
       <Text style={{fontSize: 18, color:'#3a4354'}}> Profile</Text> 
-        <List containerStyle={{marginBottom: 20, borderColor : '#efefef'}}>  
-         <ListItem containerStyle={{borderTopColor : '#efefef', borderBottomColor : '#efefef'}} style={{borderTopColor : '#efefef'}}     
+        <List containerStyle={styles.containerLightBorder}>  
+         <ListItem containerStyle={styles.bottomBorderLight}     
                 key={1}
                 title={              
                 <View>
@@ -60,21 +60,19 @@ export default class HomeScreen extends React.Component {
                     <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
                     <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
                 </View>   
-                }
-
-                />               
-
+                }                
+                />   
         </List>
      
-        <View style={{flexDirection: 'row', justifyContent : 'space-evenly', marginTop:10}} containerStyle={styles.listItemBorderLight}> 
+        <View style={{flexDirection: 'row', justifyContent : 'space-evenly', marginTop:10}} 
+          containerStyle={styles.bottomBorderLight}> 
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
         </View>
-
        
-       <List containerStyle={{marginBottom: 20, borderColor : '#efefef'}}>  
-         <ListItem containerStyle={{borderTopColor : '#efefef', borderBottomColor : '#efefef'}} style={{borderTopColor : '#efefef'}}     
+       <List containerStyle={styles.containerLightBorder}>     
+         <ListItem containerStyle={styles.bottomBorderLight}      
                     key={2}
                     title={              
                     <View>
@@ -86,11 +84,10 @@ export default class HomeScreen extends React.Component {
                     <View style={{paddingTop: 6}}>
                         <Text style={{fontSize:11, color:'#d2d6f3'}}> Designing for human love </Text> 
                     </View>             
-                    }      
-                    
+                    }                          
             />               
         </List>
-
+        
       </View>
     );
   }
