@@ -13,6 +13,7 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem, Avatar, Button } from 'react-native-elements';
 
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -34,16 +35,14 @@ export default class HomeScreen extends React.Component {
   ];  
     
   render() {
-    
+
     return (
 
       <View style={styles.containerSchedule}>
 
       <Text style={{fontSize: 18, color:'#3a4354'}}> Profile</Text> 
-
-        <List containerStyle={{marginBottom: 20}} style={{borderBottomWidth: 0}}>                 
-
-         <ListItem style={{borderBottomWidth: 0}}    
+        <List containerStyle={{marginBottom: 20, borderColor : '#efefef'}}>  
+         <ListItem containerStyle={{borderTopColor : '#efefef', borderBottomColor : '#efefef'}} style={{borderTopColor : '#efefef'}}     
                 key={1}
                 title={              
                 <View>
@@ -61,54 +60,35 @@ export default class HomeScreen extends React.Component {
                     <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
                     <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
                 </View>   
-
                 }
-                
+
                 />               
 
         </List>
      
-        <View style={{flexDirection: 'row', justifyContent : 'space-evenly', marginTop:10}}> 
+        <View style={{flexDirection: 'row', justifyContent : 'space-evenly', marginTop:10}} containerStyle={styles.listItemBorderLight}> 
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
             <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
         </View>
 
-
-        <View style={{flexDirection: 'row', justifyContent : 'space-evenly',
-            marginTop:20, borderTopColor : '#efefef', borderStyle: 'solid', borderBottomColor : '#efefef'}}> 
-                        
-
-            <Button style={styles.defaultButton} buttonStyle={{
-                borderRadius: 5,  backgroundColor: "#394dcf"
-                }} onPress={()=> {
-                this.props.navigation.navigate('DefaultScreen');
-            }} title="Schedule" accessibilityLabel="Learn more about this purple button"
-            />       
-                            
-            <Button style={styles.defaultButton} buttonStyle={{
-                borderRadius: 5,  backgroundColor: "#394dcf"
-                }} onPress={()=> {
-                this.props.navigation.navigate('DefaultScreen');
-            }} title="Schedule" accessibilityLabel="Learn more about this purple button"
-            />
-        </View> 
-
-        <List containerStyle={{marginBottom: 20}} style={{borderBottomWidth: 0, borderColor : '#efefef'}}>  
-            <ListItem style={{borderBottomWidth: 0, borderColor : '#efefef'}}    
+       
+       <List containerStyle={{marginBottom: 20, borderColor : '#efefef'}}>  
+         <ListItem containerStyle={{borderTopColor : '#efefef', borderBottomColor : '#efefef'}} style={{borderTopColor : '#efefef'}}     
                     key={2}
                     title={              
                     <View>
                         <Text style={{fontSize:14, color:'#3a4354'}}> About Me </Text> 
                     </View>    
                     }
+
                     subtitle={
                     <View style={{paddingTop: 6}}>
                         <Text style={{fontSize:11, color:'#d2d6f3'}}> Designing for human love </Text> 
                     </View>             
-                    }       
+                    }      
                     
-                    />               
+            />               
         </List>
 
       </View>

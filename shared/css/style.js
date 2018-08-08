@@ -13,11 +13,13 @@ export const styles = StyleSheet.create({
   defaultButton : {   
     color: '#394dcf', borderRadius : 26, 
   },
-
-  viewButton : { 
+ viewButton : { 
     marginLeft:26, marginRight : 26, marginBottom : 10
   },
-    
+  listItemBorderLight : { 
+    borderTopColor : '#efefef', 
+    borderBottomColor : '#efefef',
+  },    
   container: {
     flex: 1,
     backgroundColor: '#fff',
