@@ -1,17 +1,11 @@
 import React from 'react';
 import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text, Button,
-  TouchableOpacity,
-  View,
+  Image, Platform,ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
-import { Icon } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -41,14 +35,18 @@ export default class HomeScreen extends React.Component {
       </ScrollView>
       
       <View style={styles.viewButton}> 
-      <Button style={styles.defaultButton} onPress={()=> {
+      <Button style={styles.defaultButton} buttonStyle={{
+        borderRadius: 5, backgroundColor: "#394dcf"
+       }} onPress={()=> {
         alert('test');
       }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
       </View>
       
       <View style={styles.viewButton}>      
-      <Button style={styles.defaultButton} onPress={()=> {
+      <Button style={styles.defaultButton} buttonStyle={{
+        borderRadius: 5,  backgroundColor: "#394dcf"
+        }} onPress={()=> {
          this.props.navigation.navigate('DefaultScreen');
       }} title="Schedule" accessibilityLabel="Learn more about this purple button"
       />          
