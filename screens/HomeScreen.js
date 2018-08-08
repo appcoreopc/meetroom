@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component {
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5, backgroundColor: "#394dcf"
        }} onPress={()=> {
-        alert('test');
+        this.props.navigation.navigate('ProfileScreen');
       }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
       </View>
