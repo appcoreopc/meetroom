@@ -46,12 +46,12 @@ export default class HomeScreen extends React.Component {
                 key={1}
                 title={              
                 <View>
-                    <Text style={{fontSize:14, color:'#3a4354'}}> July Shkatova </Text> 
+                    <Text style={{fontSize:14, color:'#3a4354'}}> Jeremy Woo </Text> 
                 </View>    
                 }
                 subtitle={
                 <View style={{paddingTop: 6}}>
-                    <Text style={{fontSize:11, color:'#d2d6f3'}}> Prague, CZ </Text> 
+                    <Text style={{fontSize:11, color:'#787d87'}}> Auckland, NZ </Text> 
                 </View>             
                 }
 
@@ -82,12 +82,12 @@ export default class HomeScreen extends React.Component {
 
                     subtitle={
                     <View style={{paddingTop: 6}}>
-                        <Text style={{fontSize:11, color:'#d2d6f3'}}> Designing for human love </Text> 
+                        <Text style={{fontSize:11, color:'#787d87'}}> Designing for human love </Text> 
                     </View>             
                     }                          
             />               
         </List>
-        
+
       </View>
     );
   }
