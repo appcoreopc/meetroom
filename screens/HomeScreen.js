@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image, Platform,ScrollView, StyleSheet, Text, TouchableOpacity, View
+  Image, Platform,ScrollView, StyleSheet, Text, Alert, TouchableOpacity, View
 } from 'react-native';
 import { Constants, ImagePicker, Permissions } from 'expo';
 import { MonoText } from '../components/StyledText';
@@ -76,22 +76,39 @@ export default class HomeScreen extends React.Component {
     }
   };
   
+  
   _handleImagePicked = async pickerResult => {
-      
     let uploadResponse, uploadResult;
-    
+
     try {
       this.setState({
         uploading: true
+
       });
       
       if (!pickerResult.cancelled) {
 
-        await alert('prompt users');
-        console.log('need to prompt users.');
-        uploadResponse = await uploadImageAsync(pickerResult.uri);
-        uploadResult = await uploadResponse.json();
-        
+        await Alert.alert(
+          'Alert Title',
+          'My Alert Msg',
+          [
+            {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'OK', onPress: () => {
+
+              console.log('OK Pressed. Send ..');
+              console.log(this.uploadImageAsync);
+
+              uploadResponse = await this.uploadImageAsync(pickerResult.uri);
+              uploadResult = await uploadResponse.json();
+
+
+
+            }},
+          ],
+          { cancelable: false }
+        );      
+     
         this.setState({
           image: uploadResult.location
         });
@@ -110,9 +127,6 @@ export default class HomeScreen extends React.Component {
 
   async uploadImageAsync(uri) {
     
-
-    console.log('testing');
-
     let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
     
     // Note:
