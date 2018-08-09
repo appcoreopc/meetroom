@@ -99,8 +99,9 @@ export default class HomeScreen extends React.Component {
               console.log('OK Pressed. Send ..');
               console.log(this.uploadImageAsync);
 
-              uploadResponse = await this.uploadImageAsync(pickerResult.uri);
-              uploadResult = await uploadResponse.json();
+              // Push this into a new asnyc function 
+              uploadResponse = this.uploadImageAsync(pickerResult.uri);
+              uploadResult = uploadResponse.json();
 
 
 
