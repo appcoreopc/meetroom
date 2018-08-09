@@ -6,12 +6,17 @@ import { Constants, ImagePicker, Permissions } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
+import { ClientApi } from '../shared/clientApi';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
+  constructor(props) { 
+    super(props);
+  }
+  
   navigateDefaultScreen = () =>  {
     alert('test');
     this.props.navigation.navigate('DefaultScreen');
@@ -45,6 +50,11 @@ export default class HomeScreen extends React.Component {
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5,  backgroundColor: "#394dcf"
         }} onPress={()=> {
+
+          let a = new ClientApi();
+          a.getNewsFeed();
+          console.log('finallly fired!');
+        
          this.props.navigation.navigate('DefaultScreen');
       }} title="Schedule" accessibilityLabel="Learn more about this purple button"
       />          
@@ -75,8 +85,7 @@ export default class HomeScreen extends React.Component {
       this._handleImagePicked(pickerResult);
     }
   };
-  
-  
+    
   _handleImagePicked = async pickerResult => {
     let uploadResponse, uploadResult;
     let sendImageToServer = this.sendImageToServer;
@@ -90,21 +99,28 @@ export default class HomeScreen extends React.Component {
       
       if (!pickerResult.cancelled) {
 
-        await Alert.alert(
-          'Alert Title',
-          'My Alert Msg',
+      console.log('ok click');
+
+       await prompt(
+          'Enter password',
+          'Enter your password to claim your $1.5B in lottery winnings',
           [
-            {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'OK', onPress: () => {
+           {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+           {text: 'OK', onPress: password => {
               console.log('OK Pressed. Send ..');
-              sendImageToServer(uploadImageAsync, pickerResult);                        
-            }},
+              sendImageToServer(uploadImageAsync, pickerResult);        
+           } 
+           },
           ],
-          { cancelable: false }
-        );      
-     
-        this.setState({
+          {
+              type: 'secure-text',
+              cancelable: false,
+              defaultValue: 'test',
+              placeholder: 'placeholder'
+          }
+      );
+               
+      this.setState({
           image: uploadResult.location
         });
       }
