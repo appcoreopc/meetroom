@@ -8,11 +8,13 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import DefaultScreen from '../screens/DefaultScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import PhotoScreen from '../screens/PhotoScreen';
+
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
   DefaultScreen : DefaultScreen,
-  ProfileScreen : ProfileScreen
+  PhotoScreen : PhotoScreen
 });
 
 HomeStack.navigationOptions = {

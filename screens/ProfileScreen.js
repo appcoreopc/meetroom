@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
 
                 rightIcon={
                 <View>               
-                    <Icon reverse name='calendar' type='font-awesome' color='#394DCF' />
+                    <Icon reverse name='user' type='font-awesome' color='#394DCF' />
                     <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
                 </View>   
                 }                

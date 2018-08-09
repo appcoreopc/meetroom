@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Image, Platform,ScrollView, StyleSheet, Text, TouchableOpacity, View
 } from 'react-native';
-import { WebBrowser } from 'expo';
+import { Constants, ImagePicker, Permissions } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
@@ -37,9 +37,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.viewButton}> 
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5, backgroundColor: "#394dcf"
-       }} onPress={()=> {
-        this.props.navigation.navigate('ProfileScreen');
-      }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
+       }} onPress={this._takePhoto} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
       </View>
       
@@ -55,39 +53,98 @@ export default class HomeScreen extends React.Component {
       
       </View>
     );
-  }
-  
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-        Learn more
-        </Text>
-      );
+  } 
+
+  _takePhoto = async () => {
       
-      return (
-        <Text style={styles.developmentModeText}>
-        Development mode is enabled, your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-        You are not in development mode, your app will run at full speed.
-        </Text>
-      );
+    const {
+      status: cameraPerm
+    } = await Permissions.askAsync(Permissions.CAMERA);
+    
+    const {
+      status: cameraRollPerm
+    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    
+    // only if user allows permission to camera AND camera roll
+    if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchCameraAsync({
+        //allowsEditing: true,
+        //aspect: [4, 3],
+      });
+            
+      this._handleImagePicked(pickerResult);
     }
-  }
-  
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
   };
   
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  _handleImagePicked = async pickerResult => {
+      
+    let uploadResponse, uploadResult;
+    
+    try {
+      this.setState({
+        uploading: true
+      });
+      
+      if (!pickerResult.cancelled) {
+
+        await alert('prompt users');
+        console.log('need to prompt users.');
+        uploadResponse = await uploadImageAsync(pickerResult.uri);
+        uploadResult = await uploadResponse.json();
+        
+        this.setState({
+          image: uploadResult.location
+        });
+      }
+    } catch (e) {
+      console.log({ uploadResponse });
+      console.log({ uploadResult });
+      console.log({ e });
+      //alert('Upload failed, sorry :(');
+    } finally {
+      this.setState({
+        uploading: false
+      });
+    }
+  };  
+
+  async uploadImageAsync(uri) {
+    
+
+    console.log('testing');
+
+    let apiUrl = 'https://file-upload-example-backend-dkhqoilqqn.now.sh/upload';
+    
+    // Note:
+    // Uncomment this if you want to experiment with local server
+    //
+    // if (Constants.isDevice) {
+    //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+    // } else {
+    //   apiUrl = `http://localhost:3000/upload`
+    // }
+    
+    let uriParts = uri.split('.');
+    let fileType = uriParts[uriParts.length - 1];
+    
+    let formData = new FormData();
+    formData.append('photo', {
+      uri,
+      name: `photo.${fileType}`,
+      type: `image/${fileType}`,
+    });
+    
+    let options = {
+      method: 'POST',
+      body: formData,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    
+    return fetch(apiUrl, options);
+  }    
+
 }
 
