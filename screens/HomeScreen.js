@@ -79,7 +79,9 @@ export default class HomeScreen extends React.Component {
   
   _handleImagePicked = async pickerResult => {
     let uploadResponse, uploadResult;
-
+    let sendImageToServer = this.sendImageToServer;
+    let uploadImageAsync = this.uploadImageAsync;
+    
     try {
       this.setState({
         uploading: true
@@ -95,16 +97,8 @@ export default class HomeScreen extends React.Component {
             {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
             {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
             {text: 'OK', onPress: () => {
-
               console.log('OK Pressed. Send ..');
-              console.log(this.uploadImageAsync);
-
-              // Push this into a new asnyc function 
-              uploadResponse = this.uploadImageAsync(pickerResult.uri);
-              uploadResult = uploadResponse.json();
-
-
-
+              sendImageToServer(uploadImageAsync, pickerResult);                        
             }},
           ],
           { cancelable: false }
@@ -125,6 +119,12 @@ export default class HomeScreen extends React.Component {
       });
     }
   };  
+
+  async sendImageToServer(uploadImageAsync, pickerResult) { 
+    console.log('sending image to server');
+    uploadResponse = await uploadImageAsync(pickerResult.uri);
+    uploadResult = await uploadResponse.json();
+  }
 
   async uploadImageAsync(uri) {
     
