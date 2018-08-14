@@ -19,7 +19,6 @@ export default class HomeScreen extends React.Component {
     super(props);       
   }  
 
-
   componentDidMount() {   
    console.log('query db...');
 
@@ -60,32 +59,7 @@ export default class HomeScreen extends React.Component {
      }
     );
   });
-
-
-    // db.transaction(tx => {
-    //   tx.executeSql(
-    //     'SELECT name FROM sqlite_master WHERE type="table" AND name="items";', 0, (a,b) => {
-    //      console.log('success');
-    //      console.log(a);
-    //      console.log(b);
-    //     }, 
-    //    () => { 
-    //     console.log('error');
-    //   });
-    // });
-
-    // db.transaction(tx => {
-    //   tx.executeSql(
-    //     'SELECT done FROM items";', 0, (a,b) => {
-    //      console.log('success');
-    //      console.log(a);
-    //      console.log(b);
-    //     }, 
-    //    () => { 
-    //     console.log('error');
-    //   });
-    // });
-
+   
   }
   
   navigateDefaultScreen = () =>  {
