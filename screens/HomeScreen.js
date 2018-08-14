@@ -7,6 +7,7 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
 import { ClientApi } from '../shared/clientApi';
+import { MeetroomDb } from '../shared/meetroomdb';
 
 const db = SQLite.openDatabase('meetroom.db');
 
@@ -22,43 +23,46 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {   
    console.log('query db...');
 
-   db.transaction(tx => {
-    tx.executeSql(
-      'create table if not exists items (id integer primary key not null, done int, value text);', 0, (a,b) => {
-       console.log('success');
-       console.log(a);
-       console.log(b);
-      }, 
-     () => { 
-      console.log('error creating table..');
-    });
-  });
-  
-   db.transaction(tx => {
-    tx.executeSql(
-      'insert into items(done, value) values (1, "test1")', 0,  (a,b) => {
-        console.log('success insert');
-        console.log(a);
-        console.log(b);
-       }, 
-      () => { 
-       console.log('error creating table..');
-     }
-    );
-  });
+   var d = new MeetroomDb(); 
+   d.isRegisteredUser();
 
-  db.transaction(tx => {
-    tx.executeSql(
-      'select id from items', 0,  (a,b) => {
-        console.log('success get');
-        console.log(a);
-        console.log(b);
-       }, 
-      () => { 
-       console.log('error creating table..');
-     }
-    );
-  });
+  //  db.transaction(tx => {
+  //   tx.executeSql(
+  //     'create table if not exists items (id integer primary key not null, done int, value text);', 0, (a,b) => {
+  //      console.log('success');
+  //      console.log(a);
+  //      console.log(b);
+  //     }, 
+  //    () => { 
+  //     console.log('error creating table..');
+  //   });
+  // });
+  
+   //  db.transaction(tx => {
+  //   tx.executeSql(
+  //     'insert into items(done, value) values (1, "test1")', 0,  (a,b) => {
+  //       console.log('success insert');
+  //       console.log(a);
+  //       console.log(b);
+  //      }, 
+  //     () => { 
+  //      console.log('error creating table..');
+  //    }
+  //   );
+  // });
+
+  // db.transaction(tx => {
+  //   tx.executeSql(
+  //     'select id from items', 0,  (a,b) => {
+  //       console.log('success get');
+  //       console.log(a);
+  //       console.log(b);
+  //      }, 
+  //     () => { 
+  //      console.log('error creating table..');
+  //    }
+  //   );
+  // });
    
   }
   
