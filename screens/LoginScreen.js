@@ -1,95 +1,26 @@
 import React from 'react';
 import {
-  Image, Platform,ScrollView, StyleSheet, Text, Alert, TouchableOpacity, View
+  Image, Platform,ScrollView, StyleSheet, TextInput, Text, Alert, TouchableOpacity, View
 } from 'react-native';
-import Expo, { SQLite, Constants, ImagePicker, Permissions } from 'expo';
+import { Constants, ImagePicker, Permissions } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
 import { ClientApi } from '../shared/clientApi';
 
-const db = SQLite.openDatabase('meetroom.db');
-
-export default class HomeScreen extends React.Component {
+export default class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
 
   constructor(props) { 
-    super(props);       
-  }  
-
-
-  componentDidMount() {   
-   console.log('query db...');
-
-   db.transaction(tx => {
-    tx.executeSql(
-      'create table if not exists items (id integer primary key not null, done int, value text);', 0, (a,b) => {
-       console.log('success');
-       console.log(a);
-       console.log(b);
-      }, 
-     () => { 
-      console.log('error creating table..');
-    });
-  });
-  
-   db.transaction(tx => {
-    tx.executeSql(
-      'insert into items(done, value) values (1, "test1")', 0,  (a,b) => {
-        console.log('success insert');
-        console.log(a);
-        console.log(b);
-       }, 
-      () => { 
-       console.log('error creating table..');
-     }
-    );
-  });
-
-  db.transaction(tx => {
-    tx.executeSql(
-      'select id from items', 0,  (a,b) => {
-        console.log('success get');
-        console.log(a);
-        console.log(b);
-       }, 
-      () => { 
-       console.log('error creating table..');
-     }
-    );
-  });
-
-
-    // db.transaction(tx => {
-    //   tx.executeSql(
-    //     'SELECT name FROM sqlite_master WHERE type="table" AND name="items";', 0, (a,b) => {
-    //      console.log('success');
-    //      console.log(a);
-    //      console.log(b);
-    //     }, 
-    //    () => { 
-    //     console.log('error');
-    //   });
-    // });
-
-    // db.transaction(tx => {
-    //   tx.executeSql(
-    //     'SELECT done FROM items";', 0, (a,b) => {
-    //      console.log('success');
-    //      console.log(a);
-    //      console.log(b);
-    //     }, 
-    //    () => { 
-    //     console.log('error');
-    //   });
-    // });
-
+    super(props);
+    this.state = { username : '', password : ''};  
   }
   
   navigateDefaultScreen = () =>  {
-     this.props.navigation.navigate('DefaultScreen');
+    alert('test');
+    this.props.navigation.navigate('DefaultScreen');
   }
   
   render() {
@@ -105,8 +36,8 @@ export default class HomeScreen extends React.Component {
       </ScrollView>
       
       <ScrollView style={styles.whiteContainer}>
-      <Text style={styles.tabBarInfoTextBold}> Find lessons near you  </Text> 
-      <Text style={styles.tabBarInfoText}>Allow Meetroom to use your location to find only relevant lessons and students in your area.</Text>
+      <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
+      <Text style={styles.tabBarInfoText}>Allow us to serve you better</Text>
       </ScrollView>
       
       <View style={styles.viewButton}> 
@@ -117,6 +48,21 @@ export default class HomeScreen extends React.Component {
       </View>
       
       <View style={styles.viewButton}>      
+
+
+        <TextInput
+          style={{height: 40}}
+          placeholder="Username"
+          onChangeText={(text) => this.setState({username})}
+        />
+
+        <TextInput
+          style={{height: 40}}
+          placeholder="Password"
+          onChangeText={(text) => this.setState({password})}
+        />
+
+      
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5,  backgroundColor: "#394dcf"
         }} onPress={()=> {

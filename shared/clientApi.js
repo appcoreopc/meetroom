@@ -14,8 +14,9 @@ export class ClientApi {
         let response = await fetch(apiUri);
         let responseJson = await response.json();
 
-        console.log('done');
+        console.log('done1');
         console.log(responseJson);
+        console.log('done2');
         
         } 
         catch (error) {
