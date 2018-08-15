@@ -13,8 +13,11 @@ export const styles = StyleSheet.create({
   defaultButton : {   
     color: '#394dcf', borderRadius : 26, 
   },
- viewButton : { 
+  viewButton : { 
     marginLeft:26, marginRight : 26, marginBottom : 10
+  },
+  containerLoginButton : { 
+    marginTop : 40
   },
   containerLightBorder : {
     marginBottom: 20, borderColor : '#efefef'

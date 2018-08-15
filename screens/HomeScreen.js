@@ -20,11 +20,17 @@ export default class HomeScreen extends React.Component {
     super(props);       
   }  
 
-  componentDidMount() {   
-   console.log('query db...');
+  async componentDidMount() {   
 
+   console.log('query db...');
    var d = new MeetroomDb(); 
-   d.isRegisteredUser();
+   let status = await d.checkUserRegistered();
+   console.log('current get status with promise');
+   console.log('a state ' + status);
+   status = false;
+   if (status === false) {
+         this.props.navigation.navigate('LoginScreen');
+   }
 
   //  db.transaction(tx => {
   //   tx.executeSql(
@@ -112,6 +118,8 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   } 
+
+
 
   _takePhoto = async () => {
       

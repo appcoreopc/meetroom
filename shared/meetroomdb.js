@@ -7,33 +7,45 @@ export class MeetroomDb {
     constructor(props) {
         
     }
+       
     
-    async isRegisteredUser() { 
-        
-        console.log('checking if user has registered');
+    async checkUserRegistered() { 
+       
+       console.log('checkUserRegistered');
+
+       return new Promise((resolve, reject) => {
 
         db.transaction(tx => {
+
             tx.executeSql(
-                'select id, username from users', 0,  (a,b) => {
-                    console.log('success get');
+                "select id, username from users", null,  (a,b) => {
+                    console.log('table exist get');
                     console.log(a);
+                    console.log("-----------")
                     console.log(b);
+                    resolve(true);
                 }, 
                 () => { 
                     // possible no results //
                     console.log('user record not found..');
                     this.createUserTableIfNotExist();
+                    resolve(false);
                 }
             );
-        });        
+        });       
+
+       });  
+
     }
     
     async createUserTableIfNotExist() { 
         
+        console.log('create table if not exist');
+
         db.transaction(tx => {
             tx.executeSql(
                 'create table if not exists users (id integer primary key not null, username text);', 0, (a,b) => {
-                    console.log('success');
+                    console.log(' --- success');
                     console.log(a);
                     console.log(b);
                 }, 
