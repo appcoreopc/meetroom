@@ -25,12 +25,12 @@ export default class LoginScreen extends React.Component {
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
-      <Icon name='sc-telegram' type='evilicon' color='#517fa4' size={240} />             
+      <Icon name='lock' type='font-awesome' color='#517fa4' size={240} />             
       </View>
       
       </ScrollView>
       
-      <ScrollView style={styles.whiteContainer}>
+      <ScrollView style={styles.whiteLoginContainer}>
       <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
       <Text style={styles.tabBarInfoText}>Allow us to serve you better</Text>
       </ScrollView>
@@ -42,7 +42,7 @@ export default class LoginScreen extends React.Component {
       placeholder="Username"
       onChangeText={(text) => this.setState({username : text})} 
       />
-      
+            
       <TextInput
       style={{height: 40}}
       placeholder="Password"

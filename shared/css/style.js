@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     marginLeft:26, marginRight : 26, marginBottom : 10
   },
   containerLoginButton : { 
-    marginTop : 40
+    marginTop : 10
   },
   containerLightBorder : {
     marginBottom: 20, borderColor : '#efefef'
@@ -47,6 +47,11 @@ export const styles = StyleSheet.create({
   },
   whiteContainer: {
     paddingVertical : 30,
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  whiteLoginContainer: {
+    paddingVertical : 0,
     flex: 1,
     backgroundColor: '#fff',
   },
