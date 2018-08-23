@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component {
    let status = await d.checkUserRegistered();
    console.log('current get status with promise');
    console.log('a state ' + status);
-   status = false;
+   status = true;
    if (status === false) {
          this.props.navigation.navigate('LoginScreen');
    }
@@ -69,9 +69,9 @@ export default class HomeScreen extends React.Component {
   //    }
   //   );
   // });
-   
+
   }
-  
+
   navigateDefaultScreen = () =>  {
      this.props.navigation.navigate('DefaultScreen');
   }
@@ -83,14 +83,14 @@ export default class HomeScreen extends React.Component {
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
-      <Icon name='sc-telegram' type='evilicon' color='#517fa4' size={240} />             
+      <Icon name='camera' type='font-awesome' color='#517fa4' size={200} />             
       </View>
       
       </ScrollView>
       
       <ScrollView style={styles.whiteContainer}>
-      <Text style={styles.tabBarInfoTextBold}> Find lessons near you  </Text> 
-      <Text style={styles.tabBarInfoText}>Allow Meetroom to use your location to find only relevant lessons and students in your area.</Text>
+      <Text style={styles.tabBarInfoTextBold}> Upload your photo  </Text> 
+      <Text style={styles.tabBarInfoText}>Simply tab on 'Take Photo' and you're good to go.</Text>
       </ScrollView>
       
       <View style={styles.viewButton}> 
@@ -98,22 +98,7 @@ export default class HomeScreen extends React.Component {
         borderRadius: 5, backgroundColor: "#394dcf"
        }} onPress={this._takePhoto} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
-      </View>
-      
-      <View style={styles.viewButton}>      
-      <Button style={styles.defaultButton} buttonStyle={{
-        borderRadius: 5,  backgroundColor: "#394dcf"
-        }} onPress={()=> {
-
-          let a = new ClientApi();
-          a.getNewsFeed();
-          console.log('finallly fired!');
-        
-         this.props.navigation.navigate('DefaultScreen');
-      }} title="Schedule" accessibilityLabel="Learn more about this purple button"
-      />          
-      
-      </View>           
+      </View>     
       
       </View>
     );
