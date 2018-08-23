@@ -17,7 +17,75 @@ export default class LoginScreen extends React.Component {
     super(props);       
     this.state = { username : 'username', password : 'password' };      
   }
-    
+
+  async authenticate(username, password) { 
+
+    console.log(username); 
+    console.log(password);
+
+    if (username && password) {
+
+      let apiUri = "https://meetroomserver.azurewebsites.net/authenticate";
+            
+      try {
+
+        
+        // let response = await fetch(apiUri, {
+        //   method: 'post',
+        //   headers: {
+        //     'Accept': 'application/json, text/plain, */*',
+        //     'Content-Type': 'application/json'
+        //   },
+        //   body: JSON.stringify({ username : username, password : password})
+        // }).then(res => {
+          
+        //   console.log(res);
+        //   res.json();
+        // })
+        // .then(res => console.log(res));
+
+        //let responseJson = await response.json();
+        //console.log(responseJson);
+        
+        // this.setState({ 
+        //   data : responseJson.articles
+        // });
+
+
+        let response = await fetch(apiUri, {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username : username, password : password})
+        });
+
+        let rs = await response.json();
+        console.log('getting data from authentication controller');
+        console.log(rs);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      //  return responseJson.articles;
+      } catch (error) {
+        console.error(error);
+      }    
+    }
+  }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -42,7 +110,7 @@ export default class LoginScreen extends React.Component {
       placeholder="Username"
       onChangeText={(text) => this.setState({username : text})} 
       />
-            
+      
       <TextInput
       style={{height: 40}}
       placeholder="Password"
@@ -54,9 +122,7 @@ export default class LoginScreen extends React.Component {
         borderRadius: 5, backgroundColor: "#394dcf"
       }} onPress={() => {     
         
-        console.log(this.state.username);
-        
-        console.log(this.state.password);
+        this.authenticate(this.state.username, this.state.password);
         
       }} title="Login" accessibilityLabel="Learn more about this purple button"
       />               
@@ -67,6 +133,6 @@ export default class LoginScreen extends React.Component {
       </View>
     );
   }  
-
+  
 }
 
