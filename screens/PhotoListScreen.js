@@ -13,8 +13,21 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem } from 'react-native-elements';
 
-export default class PhotoListScreen extends React.Component {
-    
+
+// <FlatList
+//       data={this.state.data}
+//       keyExtractor={item => item.id}
+//       renderItem={({ item }) => (
+//         <ListItem 
+//         roundAvatar onPress={this.navigateToScreen(item.url)}
+//         title={`${item.title} `}
+//         subtitle={item.description}
+//         avatar={{ uri: item.urlToImage }}
+//         />
+//       )}
+//       />
+
+export default class PhotoListScreen extends React.Component {    
     
     list = [
         {
@@ -56,8 +69,7 @@ export default class PhotoListScreen extends React.Component {
     async getPhotoList() 
     {
       let apiUri = "https://meetroomserver.azurewebsites.net/users/all";
-      
-      
+            
       try {
         let response = await fetch(apiUri);
         let responseJson = await response.json();
