@@ -7,82 +7,56 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
 import { ClientApi } from '../shared/clientApi';
+import { AppConfig } from '../shared/AppConfig';
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };  
-  
-  constructor(props) {     
+
+  constructor(props) {        
     super(props);       
     this.state = { username : 'username', password : 'password' };      
   }
+    
+  async navigateHome() {   
+    this.props.navigation.navigate(AppConfig.HOMESCREEN);
+  }
 
   async authenticate(username, password) { 
-
-    console.log(username); 
-    console.log(password);
-
+  
     if (username && password) {
 
-      let apiUri = "https://meetroomserver.azurewebsites.net/authenticate";
-            
+      let apiUri = AppConfig.AUTHENTICATION_URL;
+
       try {
-
-        
-        // let response = await fetch(apiUri, {
-        //   method: 'post',
-        //   headers: {
-        //     'Accept': 'application/json, text/plain, */*',
-        //     'Content-Type': 'application/json'
-        //   },
-        //   body: JSON.stringify({ username : username, password : password})
-        // }).then(res => {
-          
-        //   console.log(res);
-        //   res.json();
-        // })
-        // .then(res => console.log(res));
-
-        //let responseJson = await response.json();
-        //console.log(responseJson);
-        
-        // this.setState({ 
-        //   data : responseJson.articles
-        // });
-
-
-        let response = await fetch(apiUri, {
-          method: 'post',
+      
+         let response = await fetch(apiUri, { 
+          method: AppConfig.POST,
           headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ username : username, password : password})
+          body: JSON.stringify({ username : username.trim(), password : password.trim()})
         });
 
-        let rs = await response.json();
-        console.log('getting data from authentication controller');
-        console.log(rs);
+        let responses = await response.json();
+        console.log(responses);
+        this.validateUserCredentials(responses);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-      //  return responseJson.articles;
       } catch (error) {
         console.error(error);
       }    
+    }
+  }
+  
+  async validateUserCredentials(jsonResponse) {    
+    console.log('validate user credentials');        
+    if (jsonResponse && jsonResponse.status == "true") {
+      this.navigateHome();
+    }
+    else {
+      // message and prompt user //
     }
   }
   
