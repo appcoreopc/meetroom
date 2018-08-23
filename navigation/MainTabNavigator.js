@@ -5,7 +5,10 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
+
 import SettingsScreen from '../screens/SettingsScreen';
+import PhotoListScreen from '../screens/PhotoListScreen';
+
 import DefaultScreen from '../screens/DefaultScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import PhotoScreen from '../screens/PhotoScreen';
@@ -33,7 +36,7 @@ HomeStack.navigationOptions = {
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+  Links: PhotoListScreen,
 });
 
 LinksStack.navigationOptions = {
