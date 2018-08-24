@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
   constructor(props) { 
     super(props);       
   }  
-
+  
   async componentDidMount() {       
     console.log('query db...');
     var d = new MeetroomDb(); 
@@ -71,7 +71,7 @@ export default class HomeScreen extends React.Component {
     // });
     
   }
-    
+  
   navigateDefaultScreen = () =>  {
     this.props.navigation.navigate('DefaultScreen');
   }
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   } 
-
+  
   _takePhoto = async () => {        
     const {
       status: cameraPerm
@@ -137,8 +137,6 @@ export default class HomeScreen extends React.Component {
       
       if (!pickerResult.cancelled) {
         
-        console.log('ok click');
-        
         await prompt(
           'Enter password',
           'Enter your password to claim your $1.5B in lottery winnings',
@@ -165,8 +163,7 @@ export default class HomeScreen extends React.Component {
   } catch (e) {
     console.log({ uploadResponse });
     console.log({ uploadResult });
-    console.log({ e });
-    //alert('Upload failed, sorry :(');
+    console.log({ e });  
   } finally {
     this.setState({
       uploading: false
@@ -199,7 +196,7 @@ async uploadImageAsync(uri) {
   let formData = new FormData();
   formData.append('image', {
     uri,
-    name: `photo.${fileType}`,
+    name: `photo.${fileType}`, 
     type: `image/${fileType}`,
   });
   
