@@ -27,6 +27,7 @@ export default class HomeScreen extends React.Component {
     let status = await d.checkUserRegistered();
     console.log('current get status with promise');
     console.log('a state ' + status);
+    global.username = 'mark';
     status = true;
     if (status === false) {
       this.props.navigation.navigate('LoginScreen');

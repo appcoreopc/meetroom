@@ -34,7 +34,7 @@ export default class PhotoListScreen extends React.Component {
     static navigationOptions = {
         header: null,
     };
-        
+    
     constructor(props) {
         
         super(props);
@@ -46,34 +46,39 @@ export default class PhotoListScreen extends React.Component {
             refreshing: false
         };
     }
-        
+    
     async componentDidMount() {      
-
+        
         this.getPhotoList();
     }
-
+    
     async getPhotoList() 
-    {
-      let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/mark";
+    {        
+        console.log('global user name' + global.username);
+
+        if (global.username) 
+        {                       
+            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
             
-      try {
-        let response = await fetch(apiUri);
-        let responseJson = await response.json();
-
-        console.log(responseJson);
+            try {
+                let response = await fetch(apiUri);
+                let responseJson = await response.json();
+                
+                this.setState({ 
+                    data : responseJson
+                });
+                
+                return responseJson.articles;
+            } catch (error) {
+                console.error(error);
+            }
+        }
         
-        this.setState({ 
-          data : responseJson
-        });
         
-        return responseJson.articles;
-      } catch (error) {
-        console.error(error);
-      }
     }        
-
+    
     render() {
-
+        
         return (
             <View style={styles.container}>
             
@@ -89,13 +94,13 @@ export default class PhotoListScreen extends React.Component {
                     leftIcon={{name: l.icon}}
                     />
                 ))
-
+                
             }
             </List>           
             
             </View>
         );
     }   
-  
+    
 }
 
