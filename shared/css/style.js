@@ -1,4 +1,3 @@
-
 import {
   Image,
   Platform,
@@ -10,22 +9,6 @@ import {
 } from 'react-native';
 
 export const styles = StyleSheet.create({
-  optionsTitleText: {
-    fontSize: 16,
-    marginLeft: 25,
-    marginTop: 9,
-    marginBottom: 12,
-  },  
-  sectionHeaderContainer: {
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ededed',
-  },
-  sectionHeaderText: {
-    fontSize: 14,
-  },
   defaultButton : {   
     color: '#394dcf', borderRadius : 26, 
   },
@@ -49,8 +32,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop : 30
-  }, 
-  
+  },   
   mainIconContainer: {
     alignItems: 'center',display: 'flex',
     justifyContent: 'center',

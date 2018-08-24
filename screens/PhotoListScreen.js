@@ -89,7 +89,7 @@ export default class PhotoListScreen extends React.Component {
     render() {
         
         return (
-            <View style={styles.container}>                 
+            <View>                 
 
                 <List containerStyle={{marginBottom: 20}}>
                 {
