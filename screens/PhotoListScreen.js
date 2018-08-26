@@ -110,7 +110,7 @@ export default class PhotoListScreen extends React.Component {
 
                         rightIcon={
                         <View>               
-                            <Icon reverse name='user' type='font-awesome' color='#394DCF' />
+                            <Image style={{width: 66, height: 58}} source={{uri: l.url}} />                   
                             <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
                         </View>   
                         }                
