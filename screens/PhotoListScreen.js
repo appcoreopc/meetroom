@@ -89,21 +89,43 @@ export default class PhotoListScreen extends React.Component {
     render() {
         
         return (
-            <View>                 
+            <View style={styles.containerSchedule}>                  
 
-                <List containerStyle={{marginBottom: 20}}>
+                <List containerStyle={styles.containerLightBorder}>  
                 {
                     this.state.data.map((l, i) => (
-                        
-                        <ListItem
-                        roundAvatar
-                        avatar={{uri: l.url}}
-                        key={i}
-                        title={l.description}
-                        leftIcon={{name: l.icon}}
-                        />
-                    ))                    
+
+                        <ListItem containerStyle={styles.bottomBorderLight}     
+                        key={1}
+                        title={              
+                        <View>
+                            <Text style={{fontSize:14, color:'#3a4354'}}> {l.description} </Text> 
+                        </View>    
+                        }
+                        subtitle={
+                        <View style={{paddingTop: 6}}>
+                            <Text style={{fontSize:11, color:'#787d87'}}> {l.description} </Text> 
+                        </View>             
+                        }
+
+                        rightIcon={
+                        <View>               
+                            <Icon reverse name='user' type='font-awesome' color='#394DCF' />
+                            <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
+                        </View>   
+                        }                
+                        />                      
+                            
+                            // <ListItem
+                            // roundAvatar
+                            // avatar={{uri: l.url}}
+                            // key={i}
+                            // title={l.description}
+                            // leftIcon={{name: l.icon}}
+                            // />
+                        ))                    
                 }
+
                 </List>           
             
             </View>
