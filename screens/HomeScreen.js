@@ -106,6 +106,7 @@ export default class HomeScreen extends React.Component {
   } 
   
   _takePhoto = async () => {        
+    
     const {
       status: cameraPerm
     } = await Permissions.askAsync(Permissions.CAMERA);
@@ -126,6 +127,7 @@ export default class HomeScreen extends React.Component {
   };
   
   _handleImagePicked = async pickerResult => {
+
     let uploadResponse, uploadResult;
     let sendImageToServer = this.sendImageToServer;
     let uploadImageAsync = this.uploadImageAsync;
@@ -137,25 +139,35 @@ export default class HomeScreen extends React.Component {
       });
       
       if (!pickerResult.cancelled) {
+
+        uploadResponse = await uploadImageAsync(pickerResult.uri);
+        uploadResult = await uploadResponse.json();
+
+        this.setState({
+          image: uploadResult.location
+        });
+
+        //sendImageToServer(uploadImageAsync, pickerResult);     
+
         
-        await prompt(
-          'Enter password',
-          'Enter your password to claim your $1.5B in lottery winnings',
-          [
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'OK', onPress: password => {
-              console.log('OK Pressed. Send ..');
-              sendImageToServer(uploadImageAsync, pickerResult);        
-            } 
-          },
-        ],
-        {
-          type: 'secure-text',
-          cancelable: false,
-          defaultValue: 'test',
-          placeholder: 'placeholder'
-        }
-      );
+      //   await prompt(
+      //     'Enter password',
+      //     'Enter your password to claim your $1.5B in lottery winnings',
+      //     [
+      //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      //       {text: 'OK', onPress: password => {
+      //         console.log('OK Pressed. Send ..');
+      //         sendImageToServer(uploadImageAsync, pickerResult);        
+      //       } 
+      //     },
+      //   ],
+      //   {
+      //     type: 'secure-text',
+      //     cancelable: false,
+      //     defaultValue: 'test',
+      //     placeholder: 'placeholder'
+      //   }
+      // );
       
       this.setState({
         image: uploadResult.location
@@ -173,12 +185,16 @@ export default class HomeScreen extends React.Component {
 };  
 
 async sendImageToServer(uploadImageAsync, pickerResult) { 
+
   console.log('sending image to server');
   uploadResponse = await uploadImageAsync(pickerResult.uri);
   uploadResult = await uploadResponse.json();
+
 }
 
 async uploadImageAsync(uri) {
+
+  console.log('uploading my image from camera' + uri)
   
   let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
   

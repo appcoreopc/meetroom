@@ -65,7 +65,7 @@ export default class PhotoListScreen extends React.Component {
     {        
         if (global.username) 
         {                       
-            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
+            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + 'mark';
             
             try {
                 let response = await fetch(apiUri);
@@ -96,7 +96,7 @@ export default class PhotoListScreen extends React.Component {
                     this.state.data.map((l, i) => (
 
                         <ListItem containerStyle={styles.bottomBorderLight}     
-                        key={1}
+                        key={i}
                         title={              
                         <View>
                             <Text style={{fontSize:14, color:'#3a4354'}}> {l.description} </Text> 
