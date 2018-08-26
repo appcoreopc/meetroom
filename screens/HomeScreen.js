@@ -195,12 +195,15 @@ async uploadImageAsync(uri) {
   let fileType = uriParts[uriParts.length - 1];
   
   let formData = new FormData();
+  
   formData.append('image', {
     uri,
-    name: `photo.${fileType}`, 
-    type: `image/${fileType}`,
+    name: 'photo.${fileType}', 
+    type: 'image/${fileType}',
   });
-  
+   
+  formData.append('username', global.username);
+    
   let options = {
     method: AppConfig.POST,
     body: formData,
