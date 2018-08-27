@@ -6,12 +6,13 @@ import {
     StyleSheet,
     Text, Button,
     TouchableOpacity,
-    View
+    View, RefreshControl
 } from 'react-native';
 import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem } from 'react-native-elements';
+
 
 // const SectionHeader = ({ title }) => {
 //     return (
@@ -23,6 +24,7 @@ import { Icon, List, ListItem } from 'react-native-elements';
 //     );
 //   };
   
+
 export default class PhotoListScreen extends React.Component {    
     
     static navigationOptions = {
@@ -64,6 +66,11 @@ export default class PhotoListScreen extends React.Component {
         this.getPhotoList();
     }
     
+    onRefresh = () => {
+        
+        this.getPhotoList();
+    }
+    
     async getPhotoList() 
     {        
         if (global.username) 
@@ -87,7 +94,7 @@ export default class PhotoListScreen extends React.Component {
             }
         }              
     }   
-    
+      
     // _renderSectionHeader = ({ section }) => {
     //     return <SectionHeader title={section.title} />;
     //  };
@@ -97,8 +104,13 @@ export default class PhotoListScreen extends React.Component {
         return (
             <View style={styles.containerSchedule}>          
             
-            <ScrollView>
-
+            <ScrollView refreshControl={
+                  <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+             />
+            }>
+              
                 <List containerStyle={styles.containerLightBorder}>  
                 {
                     this.state.data.map((l, i) => (

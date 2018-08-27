@@ -14,9 +14,9 @@ export default class LoginScreen extends React.Component {
     header: null, headerStyle: {
       elevation: 0,
       shadowOpacity: 0
-    }
+    }    
   };  
-  
+    
   constructor(props) {        
     super(props);       
     this.state = { username : 'username', password : 'password' };      
