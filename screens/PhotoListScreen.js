@@ -87,7 +87,6 @@ export default class PhotoListScreen extends React.Component {
             }
         }              
     }   
-
     
     // _renderSectionHeader = ({ section }) => {
     //     return <SectionHeader title={section.title} />;
@@ -131,14 +130,7 @@ export default class PhotoListScreen extends React.Component {
                         </View>   
                         }                
                         />                      
-                            
-                            // <ListItem
-                            // roundAvatar
-                            // avatar={{uri: l.url}}
-                            // key={i}
-                            // title={l.description}
-                            // leftIcon={{name: l.icon}}
-                            // />
+                         
                         ))                    
                 }
 

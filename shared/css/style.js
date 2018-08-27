@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   blueContainer: {
-    paddingVertical : 30,
+    paddingVertical : 20,
     flex: 1,
     backgroundColor: '#0a1640',
   },
