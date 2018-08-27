@@ -22,8 +22,9 @@ export const styles = StyleSheet.create({
     marginBottom: 0, borderColor : '#efefef'
   },
   bottomBorderLight : {  
-    borderBottomColor : '#efefef'
-  },    
+    borderBottomColor : '#efefef',
+    paddingRight : 20
+  },   
   container: {
     flex: 1,
     backgroundColor: '#fff',

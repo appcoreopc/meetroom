@@ -13,7 +13,6 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem } from 'react-native-elements';
 
-
 // const SectionHeader = ({ title }) => {
 //     return (
 //       <View style={styles.sectionHeaderContainer}>
@@ -66,8 +65,7 @@ export default class PhotoListScreen extends React.Component {
         this.getPhotoList();
     }
     
-    onRefresh = () => {
-        
+    onRefresh = () => {        
         this.getPhotoList();
     }
     
@@ -75,7 +73,7 @@ export default class PhotoListScreen extends React.Component {
     {        
         if (global.username) 
         {                       
-            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + 'test';
+            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
             console.log(apiUri);
             
             try {
@@ -102,7 +100,7 @@ export default class PhotoListScreen extends React.Component {
     render() {
         
         return (
-            <View style={styles.containerSchedule}>          
+            <View style={styles.containerSchedule}>        
             
             <ScrollView refreshControl={
                   <RefreshControl
