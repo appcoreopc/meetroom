@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     marginTop : 10
   },
   containerLightBorder : {
-    marginBottom: 20, borderColor : '#efefef'
+    marginBottom: 0, borderColor : '#efefef'
   },
   bottomBorderLight : {  
     borderBottomColor : '#efefef'
@@ -31,7 +31,8 @@ export const styles = StyleSheet.create({
   containerSchedule: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingTop : 30
+    paddingTop : 0
+    
   },   
   mainIconContainer: {
     alignItems: 'center',display: 'flex',

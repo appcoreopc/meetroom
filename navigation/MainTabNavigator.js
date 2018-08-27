@@ -10,7 +10,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import PhotoListScreen from '../screens/PhotoListScreen';
 
 import DefaultScreen from '../screens/DefaultScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+//import ProfileScreen from '../screens/ProfileScreen';
 import PhotoScreen from '../screens/PhotoScreen';
 import LoginScreen from '../screens/LoginScreen';
 

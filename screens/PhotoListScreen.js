@@ -26,7 +26,10 @@ import { Icon, List, ListItem } from 'react-native-elements';
 export default class PhotoListScreen extends React.Component {    
     
     static navigationOptions = {
-        title: 'My Photos',
+        title: 'My Photos', headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0
+        }
     };
 
     list = [
@@ -84,6 +87,7 @@ export default class PhotoListScreen extends React.Component {
             }
         }              
     }   
+
     
     // _renderSectionHeader = ({ section }) => {
     //     return <SectionHeader title={section.title} />;
