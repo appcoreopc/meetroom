@@ -134,8 +134,7 @@ export default class HomeScreen extends React.Component {
     
     try {
       this.setState({
-        uploading: true
-        
+        uploading: true        
       });
       
       if (!pickerResult.cancelled) {
@@ -210,15 +209,19 @@ async uploadImageAsync(uri) {
   let uriParts = uri.split('.');
   let fileType = uriParts[uriParts.length - 1];
   
+  console.log('data file name');
+  console.log(fileType);
+
   let formData = new FormData();
   
   formData.append('image', {
     uri,
-    name: 'photo.${fileType}', 
-    type: 'image/${fileType}',
+    name: 'photo.' + fileType, 
+    type: 'image/' + fileType
   });
-   
+  
   formData.append('username', global.username);
+  formData.append('description', 'testtesttes');
     
   let options = {
     method: AppConfig.POST,

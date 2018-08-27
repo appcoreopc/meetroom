@@ -65,11 +65,14 @@ export default class PhotoListScreen extends React.Component {
     {        
         if (global.username) 
         {                       
-            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + 'mark';
+            let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + 'test';
+            console.log(apiUri);
             
             try {
                 let response = await fetch(apiUri);
                 let responseJson = await response.json();
+
+                console.log(responseJson);
                 
                 this.setState({ 
                     data : responseJson
@@ -110,7 +113,14 @@ export default class PhotoListScreen extends React.Component {
 
                         rightIcon={
                         <View>               
-                            <Image style={{width: 66, height: 58}} source={{uri: l.url}} />                   
+                            <Image style={{ borderWidth:1,
+                                borderColor:'rgba(0,0,0,0.2)',
+                                alignItems:'center',
+                                justifyContent:'center',
+                                width:40,
+                                height:40,
+                                backgroundColor:'#fff',
+                                borderRadius:100}} source={{uri: l.url}} />                   
                             <Text style={{fontSize:11, color:'#394DCF'}}> See Details </Text> 
                         </View>   
                         }                
