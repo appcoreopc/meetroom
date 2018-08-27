@@ -92,7 +92,9 @@ export default class PhotoListScreen extends React.Component {
     render() {
         
         return (
-            <View style={styles.containerSchedule}>                  
+            <View style={styles.containerSchedule}>          
+            
+            <ScrollView>
 
                 <List containerStyle={styles.containerLightBorder}>  
                 {
@@ -136,7 +138,9 @@ export default class PhotoListScreen extends React.Component {
                         ))                    
                 }
 
-                </List>           
+                </List>  
+                
+             </ScrollView>
             
             </View>
         );
