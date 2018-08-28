@@ -54,7 +54,7 @@ export default class DetailScreen extends React.Component {
         </ScrollView>
         
         <View style={{ height: 100 }} >    
-            <Text style={styles.tabBarInfoTextBold}> {this.state.itemTitle}  </Text>  
+            <Text style={styles.tabBarInfoText}> {this.state.itemTitle}  </Text>  
          </View>   
      
         </View>
