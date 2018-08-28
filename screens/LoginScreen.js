@@ -103,7 +103,7 @@ export default class LoginScreen extends React.Component {
       </ScrollView>
       
       
-      <ScrollView style={styles.bottomBlueContainer} contentContainerStyle={styles.contentContainer}>
+      <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
         <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             

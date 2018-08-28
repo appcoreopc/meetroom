@@ -45,12 +45,16 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0a1640',
   },
-  loginBlueContainer: {
-    paddingVertical : 20,
+  topLoginContainer: {
+    paddingVertical : 50,
     flex: 1,
     backgroundColor: '#fff',
   },
-
+  bottomLoginContainer: {
+    paddingVertical : 50,
+    flex: 1,
+    backgroundColor: '#0a1640',
+  },
   whiteContainer: {
     paddingVertical : 30,
     flex: 1,
@@ -60,12 +64,6 @@ export const styles = StyleSheet.create({
   whitePhotoDetailContainer: {
     paddingVertical : 30,
     backgroundColor: '#fff'
-  },
-
-  whiteLoginContainer: {
-    paddingVertical : 50,
-    flex: 1,
-    backgroundColor: '#0a1640',
   },
   developmentModeText: {
     marginBottom: 20,
