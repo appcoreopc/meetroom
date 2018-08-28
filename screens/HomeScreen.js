@@ -9,6 +9,7 @@ import { Icon, Button } from 'react-native-elements';
 import { ClientApi } from '../shared/clientApi';
 import { MeetroomDb } from '../shared/meetroomdb';
 import { AppConfig } from '../shared/AppConfig';
+import Dialog from "react-native-dialog";
 
 const db = SQLite.openDatabase('meetroom.db');
 
@@ -18,7 +19,12 @@ export default class HomeScreen extends React.Component {
   };
   
   constructor(props) { 
-    super(props);       
+
+    super(props);  
+    
+    this.state = { 
+      promptUser : false
+     };   
   }  
   
   async componentDidMount() {       
@@ -80,6 +86,22 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+
+      <Dialog.Container visible={this.state.promptUser}>
+      <Dialog.Title>Account delete</Dialog.Title>
+      <Dialog.Description>
+        Do you want to delete this account? You cannot undo this action.
+      </Dialog.Description>
+      
+      <Dialog.Input label="Cancel" onChangeText={(text) => this.setState({username : text})}  />
+
+      <Dialog.Button label="Delete" onPress={() => {
+          console.log(this.state.username);
+          this.setState({promptUser : false});
+        }} />
+    </Dialog.Container>
+
+
       
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       

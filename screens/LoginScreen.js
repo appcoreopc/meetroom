@@ -8,6 +8,9 @@ import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
 import { ClientApi } from '../shared/clientApi';
 import { AppConfig } from '../shared/AppConfig';
+import prompt from 'react-native-prompt-android';
+import Dialog from "react-native-dialog";
+
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -19,7 +22,14 @@ export default class LoginScreen extends React.Component {
   
   constructor(props) {        
     super(props);       
-    this.state = { username : 'username', password : 'password' };      
+    this.state = { 
+      username : 'username', password : 'password'
+     };      
+  }
+
+  componentDidMount()
+  {
+     
   }
   
   async navigateHome() {   
@@ -65,8 +75,9 @@ export default class LoginScreen extends React.Component {
   
   render() {
     return (
-      <View style={styles.container}>
       
+      <View style={styles.container}>
+          
       <ScrollView style={styles.topLoginContainer}>
       
         <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
