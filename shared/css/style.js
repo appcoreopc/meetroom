@@ -48,12 +48,12 @@ export const styles = StyleSheet.create({
   topLoginContainer: {
     paddingVertical : 50,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0a1640',
   },
   bottomLoginContainer: {
     paddingVertical : 50,
     flex: 1,
-    backgroundColor: '#0a1640',
+    backgroundColor: '#fff',
   },
   whiteContainer: {
     paddingVertical : 30,
