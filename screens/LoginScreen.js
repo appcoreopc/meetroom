@@ -67,7 +67,7 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
       
-          <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
+          <ScrollView style={styles.loginBlueContainer} contentContainerStyle={styles.contentContainer}>
           
           <View>
             <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
@@ -78,7 +78,7 @@ export default class LoginScreen extends React.Component {
       <ScrollView style={styles.whiteLoginContainer}>
       
             <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
-            <Text style={styles.tabBarInfoText}>Allow us to serve you better</Text>
+            <Text style={styles.tabBarInfoText}>Let's get personal</Text>
 
 
           <View style={styles.viewButton}>      

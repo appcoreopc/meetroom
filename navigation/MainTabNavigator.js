@@ -10,12 +10,14 @@ import PhotoListScreen from '../screens/PhotoListScreen';
 import DefaultScreen from '../screens/DefaultScreen';
 import PhotoScreen from '../screens/PhotoScreen';
 import LoginScreen from '../screens/LoginScreen';
+import DetailScreen from '../screens/DetailScreen';
 
 const HomeStack = createStackNavigator({
   LoginScreen : LoginScreen,
   Home : HomeScreen,
   DefaultScreen : DefaultScreen,
-  PhotoScreen : PhotoScreen 
+  PhotoScreen : PhotoScreen,
+  DetailScreen : DetailScreen
 });
 
 HomeStack.navigationOptions = {

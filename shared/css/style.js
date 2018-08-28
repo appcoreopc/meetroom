@@ -45,11 +45,23 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0a1640',
   },
+  loginBlueContainer: {
+    paddingVertical : 50,
+    flex: 1,
+    backgroundColor: '#0a1640',
+  },
+
   whiteContainer: {
     paddingVertical : 30,
     flex: 1,
     backgroundColor: '#fff',
   },
+
+  whitePhotoDetailContainer: {
+    paddingVertical : 30,
+    backgroundColor: '#fff'
+  },
+
   whiteLoginContainer: {
     paddingVertical : 0,
     flex: 1,
