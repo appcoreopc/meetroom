@@ -16,7 +16,7 @@ export default class LoginScreen extends React.Component {
       shadowOpacity: 0
     }    
   };  
-    
+  
   constructor(props) {        
     super(props);       
     this.state = { username : 'username', password : 'password' };      
@@ -67,51 +67,50 @@ export default class LoginScreen extends React.Component {
     return (
       <View style={styles.container}>
       
-          <ScrollView style={styles.loginBlueContainer} contentContainerStyle={styles.contentContainer}>
-          
-          <View>
-            <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
-          </View>
-          
-          </ScrollView>
+      <ScrollView style={styles.topLoginContainer}>
       
-      <ScrollView style={styles.whiteLoginContainer}>
-      
-            <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
-            <Text style={styles.tabBarInfoText}>Let's get personal</Text>
-
-
+        <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
+        <Text style={styles.tabBarInfoText}>Let's get personal</Text>
+                  
           <View style={styles.viewButton}>      
           
-          <TextInput
-          style={{height: 40}}
-          placeholder="Username"
-          onChangeText={(text) => this.setState({username : text})} 
-          />
+                <TextInput
+                style={{height: 40, color: '#fff'}}
+                placeholder="Username"
+                onChangeText={(text) => this.setState({username : text})} 
+                />
+                
+                <TextInput
+                style={{height: 40,  color: '#fff'}}
+                placeholder="Password"
+                onChangeText={(text) => this.setState({password : text})}
+                />
           
-          <TextInput
-          style={{height: 40}}
-          placeholder="Password"
-          onChangeText={(text) => this.setState({password : text})}
-          />
-          
-          <View style={styles.containerLoginButton}> 
-          <Button style={styles.defaultButton} buttonStyle={{
-            borderRadius: 5, backgroundColor: "#394dcf"
-          }} onPress={() => {     
-            
-            this.authenticate(this.state.username, this.state.password);
-            
-          }} title="Login" accessibilityLabel="Learn more about this purple button"
-          />               
-          </View>
+              <View style={styles.containerLoginButton}> 
+              <Button style={styles.defaultButton} buttonStyle={{
+                borderRadius: 5, backgroundColor: "#394dcf"
+              }} onPress={() => {     
+                
+                this.authenticate(this.state.username, this.state.password);
+                
+              }} title="Login" accessibilityLabel="Learn more about this purple button"
+              />               
+              </View>
           
           </View>           
       
-
+      
       </ScrollView>
       
-   
+      
+      <ScrollView style={styles.bottomBlueContainer} contentContainerStyle={styles.contentContainer}>
+      
+      <View>
+        <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
+      </View>
+      
+      </ScrollView>    
+      
       </View>
     );
   }    

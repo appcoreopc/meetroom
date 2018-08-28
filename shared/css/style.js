@@ -41,14 +41,14 @@ export const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   blueContainer: {
-    paddingVertical : 20,
+    paddingVertical : 50,
     flex: 1,
     backgroundColor: '#0a1640',
   },
   loginBlueContainer: {
-    paddingVertical : 50,
+    paddingVertical : 20,
     flex: 1,
-    backgroundColor: '#0a1640',
+    backgroundColor: '#fff',
   },
 
   whiteContainer: {
@@ -63,9 +63,9 @@ export const styles = StyleSheet.create({
   },
 
   whiteLoginContainer: {
-    paddingVertical : 0,
+    paddingVertical : 50,
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#0a1640',
   },
   developmentModeText: {
     marginBottom: 20,

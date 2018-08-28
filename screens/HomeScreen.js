@@ -84,14 +84,14 @@ export default class HomeScreen extends React.Component {
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
-      <Icon name='camera' type='font-awesome' color='#517fa4' size={200} />             
+        <Icon name='camera' type='font-awesome' color='#517fa4' size={200} />             
       </View>
       
       </ScrollView>
       
       <ScrollView style={styles.whiteContainer}>
-      <Text style={styles.tabBarInfoTextBold}> Upload your photo  </Text> 
-      <Text style={styles.tabBarInfoText}>Simply tab on 'Take Photo' and you're good to go.</Text>
+        <Text style={styles.tabBarInfoTextBold}> Upload your photo  </Text> 
+        <Text style={styles.tabBarInfoText}>Simply tab on 'Take Photo' and you're good to go.</Text>
       </ScrollView>
       
       <View style={styles.viewButton}> 
