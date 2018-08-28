@@ -79,24 +79,26 @@ export default class PhotoListScreen extends React.Component {
         if (global.username) 
         {   
             let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
-            console.log(apiUri);
-            
+           
             try {
 
                 this.setState({isBusy : true});
                 let response = await fetch(apiUri);
                 let responseJson = await response.json(); 
-                this.setState({isBusy : false});
-
+            
                 console.log(responseJson);
                 this.setState({ 
                     data : responseJson
                 });
 
                 return responseJson.articles;
-            } catch (error) {
+            } catch (error) {                
                 console.error(error);
-            }    
+                
+            } 
+            finally { 
+                this.setState({isBusy : false});
+            }   
         } 
     }   
     
@@ -109,7 +111,8 @@ export default class PhotoListScreen extends React.Component {
         return (
             <View style={styles.containerSchedule}>  
             
-            <ActivityIndicator style={{ position : 'absolute', left: 0,  right: 0, top: 0, bottom: 0, alignItems: 'center',justifyContent: 'center'}} animating={this.state.isBusy} color = '#bc2b78' size = "large" /> 
+            <ActivityIndicator style={{ position : 'absolute', left: 0,  right: 0, top: 0, bottom: 0, alignItems: 'center',justifyContent: 'center'}}
+             animating={this.state.isBusy} color = '#0a1640' size = "large" /> 
             
             <ScrollView refreshControl={
                 <RefreshControl
