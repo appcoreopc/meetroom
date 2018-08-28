@@ -13,7 +13,7 @@ import { AppConfig } from '../shared/AppConfig';
 export default class DetailScreen extends React.Component {
   
   static navigationOptions = {
-    title: '', headerStyle: {
+    title: 'Photo', headerStyle: {
       elevation: 0,
       shadowOpacity: 0
     }

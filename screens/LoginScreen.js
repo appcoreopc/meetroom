@@ -1,34 +1,33 @@
 import React from 'react';
 import {
-  Image, Platform,ScrollView, StyleSheet, TextInput, Text, Alert, TouchableOpacity, View
+  ActivityIndicator, ScrollView, TextInput, Text, View
 } from 'react-native';
 import { Constants, ImagePicker, Permissions } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
-import { ClientApi } from '../shared/clientApi';
 import { AppConfig } from '../shared/AppConfig';
 import prompt from 'react-native-prompt-android';
 import Dialog from "react-native-dialog";
 
-
 export default class LoginScreen extends React.Component {
+    
   static navigationOptions = {
-    header: null, headerStyle: {
-      elevation: 0,
-      shadowOpacity: 0
-    }    
-  };  
-  
-  constructor(props) {        
-    super(props);       
-    this.state = { 
-      username : 'username', password : 'password'
-     };      
-  }
+    header: null,
+  };
 
-  componentDidMount()
-  {
+  constructor(props) {   
+
+    super(props);  
+
+    this.state = { 
+      username : 'username', 
+      password : 'password',
+      loading : false
+     };  
+   }
+
+  componentDidMount() {
      
   }
   
@@ -37,9 +36,11 @@ export default class LoginScreen extends React.Component {
   }
   
   async authenticate(username, password) { 
-    
+
+    this.setState({loading : true});
+
     if (username && password) {
-      
+
       let apiUri = AppConfig.AUTHENTICATION_URL;
       
       try {
@@ -59,7 +60,9 @@ export default class LoginScreen extends React.Component {
         
       } catch (error) {
         console.error(error);
-      }    
+      }  
+      
+      this.setState({loading : false});
     }
   }
   
@@ -73,10 +76,21 @@ export default class LoginScreen extends React.Component {
     }
   }
   
+  
   render() {
+
     return (
       
       <View style={styles.container}>
+      
+        <ActivityIndicator style={{ position : 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center'
+        }} animating={true} color = '#bc2b78' size = "large" />
           
       <ScrollView style={styles.topLoginContainer}>
       
@@ -112,8 +126,7 @@ export default class LoginScreen extends React.Component {
       
       
       </ScrollView>
-      
-      
+            
       <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>

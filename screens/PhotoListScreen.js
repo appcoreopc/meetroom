@@ -5,7 +5,7 @@ import {
     ScrollView,
     StyleSheet,
     Text, Button,
-    TouchableOpacity,
+    TouchableOpacity,ActivityIndicator, 
     View, RefreshControl
 } from 'react-native';
 import { WebBrowser } from 'expo';
@@ -31,7 +31,7 @@ export default class PhotoListScreen extends React.Component {
             shadowOpacity: 0
         }
     };
-
+    
     list = [
         {
             name: 'Amy Farha',
@@ -47,13 +47,14 @@ export default class PhotoListScreen extends React.Component {
             
         },
     ];  
-
+    
     constructor(props) {    
-
+        
         super(props);  
-              
+        
         this.state = {            
             loading: false,
+            isBusy : false, 
             data: [],         
             error: null,
             refreshing: false
@@ -63,7 +64,7 @@ export default class PhotoListScreen extends React.Component {
     navigateDetailScreen = () =>  {
         this.props.navigation.navigate('DetailScreen');
     }
-
+    
     async componentDidMount() {            
         this.getPhotoList();
     }
@@ -73,94 +74,99 @@ export default class PhotoListScreen extends React.Component {
     }
     
     async getPhotoList() 
-    {        
+    {       
+        
         if (global.username) 
-        {                       
+        {   
             let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
             console.log(apiUri);
             
             try {
+
+                this.setState({isBusy : true});
                 let response = await fetch(apiUri);
-                let responseJson = await response.json();
+                let responseJson = await response.json(); 
+                this.setState({isBusy : false});
 
                 console.log(responseJson);
-                
                 this.setState({ 
                     data : responseJson
                 });
-                
+
                 return responseJson.articles;
             } catch (error) {
                 console.error(error);
-            }
-        }              
+            }    
+        } 
     }   
-      
+    
     // _renderSectionHeader = ({ section }) => {
     //     return <SectionHeader title={section.title} />;
     //  };
-     
+    
     render() {
         
         return (
-            <View style={styles.containerSchedule}>        
+            <View style={styles.containerSchedule}>  
+            
+            <ActivityIndicator style={{ position : 'absolute', left: 0,  right: 0, top: 0, bottom: 0, alignItems: 'center',justifyContent: 'center'}} animating={this.state.isBusy} color = '#bc2b78' size = "large" /> 
             
             <ScrollView refreshControl={
-                  <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.onRefresh}
-             />
+                <RefreshControl
+                refreshing={this.state.loading}
+                onRefresh={this.onRefresh}
+                />
             }>
-              
-                <List containerStyle={styles.containerLightBorder}>  
-                {
-                    this.state.data.map((l, i) => (
-
-                        <ListItem containerStyle={styles.bottomBorderLight}     
-                        key={i}
-                        title={              
+            
+            <List containerStyle={styles.containerLightBorder}>  
+            {
+                this.state.data.map((l, i) => (
+                    
+                    <ListItem containerStyle={styles.bottomBorderLight}     
+                    key={i}
+                    title={              
                         <View>
-                            <Text style={{fontSize:14, color:'#3a4354'}}> {l.description} </Text> 
+                        <Text style={{fontSize:14, color:'#3a4354'}}> {l.description} </Text> 
                         </View>    
-                        }
-                        subtitle={
+                    }
+                    subtitle={
                         <View style={{paddingTop: 6}}>
-                            <Text style={{fontSize:11, color:'#787d87'}}> {l.description} </Text> 
+                        <Text style={{fontSize:11, color:'#787d87'}}> {l.description} </Text> 
                         </View>             
-                        }
-
-                        rightIcon={
+                    }
+                    
+                    rightIcon={
                         <View>               
-                            <Image style={{ borderWidth:1,
-                                borderColor:'rgba(0,0,0,0.2)',
-                                alignItems:'center',
-                                justifyContent:'center',
-                                width:40, marginBottom : 5,
-                                height:40,
-                                backgroundColor:'#fff',
-                                borderRadius:100}} source={{uri: l.url}} />                   
+                        <Image style={{ borderWidth:1,
+                            borderColor:'rgba(0,0,0,0.2)',
+                            alignItems:'center',
+                            justifyContent:'center',
+                            width:40, marginBottom : 5,
+                            height:40,
+                            backgroundColor:'#fff',
+                            borderRadius:100}} source={{uri: l.url}} />                   
                             <Text style={{fontSize:9, color:'#394DCF', paddingRight : 12}}>See Details</Text> 
-                        </View>   
+                            </View>   
                         }                
                         onPress={()=> { 
-                               console.log('going into detail screen');
-                               this.props.navigation.navigate('DetailScreen', {
-                                 description : l.description, 
-                                 url : l.url
-                               });
-                              }}
+                            console.log('going into detail screen');
+                            this.props.navigation.navigate('DetailScreen', {
+                                description : l.description, 
+                                url : l.url
+                            });
+                        }}
                         
-                        />                      
-                         
-                        ))                    
+                        />     
+                    ))                    
                 }
-
+                
                 </List>  
                 
-             </ScrollView>
-            
-            </View>
-        );
-    }       
-}
-
+                </ScrollView>
+                
+                </View>
+            );
+        }       
+    }
+    
+    
