@@ -89,7 +89,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
       
-      <Dialog.Container visible={this.state.so}>
+      <Dialog.Container visible={this.state.showPrompt}>
       <Dialog.Title>Account delete</Dialog.Title>
       <Dialog.Description>
       Do you want to delete this account? You cannot undo this action.
@@ -169,8 +169,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           image: uploadResult.location
         });
-        
-        
+       
         this.setState({
           image: uploadResult.location
         });
@@ -209,7 +208,9 @@ export default class HomeScreen extends React.Component {
     // } else {
     //   apiUrl = `http://localhost:3000/upload`
     // }
-    
+    console.log('photo camera path', uri);
+
+
     let uriParts = uri.split('.');
     let fileType = uriParts[uriParts.length - 1];
     
