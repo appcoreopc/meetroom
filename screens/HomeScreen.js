@@ -21,7 +21,7 @@ export default class HomeScreen extends React.Component {
   constructor(props) {         
     super(props);      
     this.state = { 
-      promptUser : false
+      showPrompt : false
     };   
   }  
   
@@ -89,7 +89,7 @@ export default class HomeScreen extends React.Component {
     return (
       <View style={styles.container}>
       
-      <Dialog.Container visible={this.state.promptUser}>
+      <Dialog.Container visible={this.state.so}>
       <Dialog.Title>Account delete</Dialog.Title>
       <Dialog.Description>
       Do you want to delete this account? You cannot undo this action.
@@ -99,7 +99,7 @@ export default class HomeScreen extends React.Component {
       
       <Dialog.Button label="Delete" onPress={() => {
         console.log(this.state.username);
-        this.setState({promptUser : false});
+        this.setState({showPrompt : false});
       }} />
       </Dialog.Container>
       
