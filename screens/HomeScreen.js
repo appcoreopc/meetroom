@@ -18,26 +18,28 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
   
-  constructor(props) { 
-
-    super(props);  
-    
+  constructor(props) {         
+    super(props);      
     this.state = { 
       promptUser : false
-     };   
+    };   
   }  
   
-  async componentDidMount() {       
-    console.log('query db...');
-    var d = new MeetroomDb(); 
-    let status = await d.checkUserRegistered();
-    console.log('current get status with promise');
-    console.log('a state ' + status);
-    global.username = 'mark';
-    status = true;
-    if (status === false) {
-      this.props.navigation.navigate('LoginScreen');
-    }
+  async componentDidMount() { 
+
+    // console.log('query db...');
+    // var d = new MeetroomDb(); 
+    // let status = await d.checkUserRegistered();
+    // console.log('current get status with promise');
+    // console.log('a state ' + status);
+    //global.username = 'mark';
+    //status = true;
+
+    console.log('globalusername', global.username);
+
+    // if (status === false) {
+    //   this.props.navigation.navigate('LoginScreen');
+    // }
     
     //  db.transaction(tx => {
     //   tx.executeSql(
@@ -86,34 +88,34 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
+      
       <Dialog.Container visible={this.state.promptUser}>
       <Dialog.Title>Account delete</Dialog.Title>
       <Dialog.Description>
-        Do you want to delete this account? You cannot undo this action.
+      Do you want to delete this account? You cannot undo this action.
       </Dialog.Description>
       
       <Dialog.Input label="Cancel" onChangeText={(text) => this.setState({username : text})}  />
-
+      
       <Dialog.Button label="Delete" onPress={() => {
-          console.log(this.state.username);
-          this.setState({promptUser : false});
-        }} />
-    </Dialog.Container>
-
-
+        console.log(this.state.username);
+        this.setState({promptUser : false});
+      }} />
+      </Dialog.Container>
+      
+      
       
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
-        <Icon name='camera' type='font-awesome' color='#517fa4' size={200} />             
+      <Icon name='camera' type='font-awesome' color='#517fa4' size={200} />             
       </View>
       
       </ScrollView>
       
       <ScrollView style={styles.whiteContainer}>
-        <Text style={styles.tabBarInfoTextBold}> Upload your photo  </Text> 
-        <Text style={styles.tabBarInfoText}>Simply tab on 'Take Photo' and you're good to go.</Text>
+      <Text style={styles.tabBarInfoTextBold}> Upload your photo  </Text> 
+      <Text style={styles.tabBarInfoText}>Simply tab on 'Take Photo' and you're good to go.</Text>
       </ScrollView>
       
       <View style={styles.viewButton}> 
@@ -149,7 +151,7 @@ export default class HomeScreen extends React.Component {
   };
   
   _handleImagePicked = async pickerResult => {
-
+    
     let uploadResponse, uploadResult;
     let sendImageToServer = this.sendImageToServer;
     let uploadImageAsync = this.uploadImageAsync;
@@ -160,100 +162,80 @@ export default class HomeScreen extends React.Component {
       });
       
       if (!pickerResult.cancelled) {
-
+        
         uploadResponse = await uploadImageAsync(pickerResult.uri);
         uploadResult = await uploadResponse.json();
-
+        
         this.setState({
           image: uploadResult.location
         });
-
-        //sendImageToServer(uploadImageAsync, pickerResult);     
-
         
-      //   await prompt(
-      //     'Enter password',
-      //     'Enter your password to claim your $1.5B in lottery winnings',
-      //     [
-      //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-      //       {text: 'OK', onPress: password => {
-      //         console.log('OK Pressed. Send ..');
-      //         sendImageToServer(uploadImageAsync, pickerResult);        
-      //       } 
-      //     },
-      //   ],
-      //   {
-      //     type: 'secure-text',
-      //     cancelable: false,
-      //     defaultValue: 'test',
-      //     placeholder: 'placeholder'
-      //   }
-      // );
-      
+        
+        this.setState({
+          image: uploadResult.location
+        });
+      }
+    } catch (e) {
+      console.log({ uploadResponse });
+      console.log({ uploadResult });
+      console.log({ e });  
+    } finally {
       this.setState({
-        image: uploadResult.location
+        uploading: false
       });
     }
-  } catch (e) {
-    console.log({ uploadResponse });
-    console.log({ uploadResult });
-    console.log({ e });  
-  } finally {
-    this.setState({
-      uploading: false
-    });
-  }
-};  
+  };  
 
-async sendImageToServer(uploadImageAsync, pickerResult) { 
-
-  console.log('sending image to server');
-  uploadResponse = await uploadImageAsync(pickerResult.uri);
-  uploadResult = await uploadResponse.json();
-
-}
-
-async uploadImageAsync(uri) {
-
-  console.log('uploading my image from camera' + uri)
   
-  let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
-  
-  // Note:
-  // Uncomment this if you want to experiment with local server
-  //
-  // if (Constants.isDevice) {
-  //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-  // } else {
-  //   apiUrl = `http://localhost:3000/upload`
-  // }
-  
-  let uriParts = uri.split('.');
-  let fileType = uriParts[uriParts.length - 1];
-  
-  console.log('data file name');
-  console.log(fileType);
-
-  let formData = new FormData();
-  
-  formData.append('image', {
-    uri,
-    name: 'photo.' + fileType, 
-    type: 'image/' + fileType
-  });
-  
-  formData.append('username', global.username);
-  formData.append('description', 'testtesttes');
+  async sendImageToServer(uploadImageAsync, pickerResult) { 
     
-  let options = {
-    method: AppConfig.POST,
-    body: formData,
-    headers: {
-      Accept: AppConfig.APPLICATION_TYPE_JSON,
-      'Content-Type': AppConfig.CONTENT_MULTIPART_FORM_DATA,
-    },
-  };
+    console.log('sending image to server');
+    uploadResponse = await uploadImageAsync(pickerResult.uri);
+    uploadResult = await uploadResponse.json();
+    
+  }
   
-  return fetch(photoUploadUrl, options);
-}    
+  async uploadImageAsync(uri) {
+    
+    console.log('uploading my image from camera' + uri)
+    
+    let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
+    
+    // Note:
+    // Uncomment this if you want to experiment with local server
+    //
+    // if (Constants.isDevice) {
+    //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+    // } else {
+    //   apiUrl = `http://localhost:3000/upload`
+    // }
+    
+    let uriParts = uri.split('.');
+    let fileType = uriParts[uriParts.length - 1];
+    
+    console.log('data file name');
+    console.log(fileType);
+    
+    let formData = new FormData();
+    
+    formData.append('image', {
+      uri,
+      name: 'photo.' + fileType, 
+      type: 'image/' + fileType
+    });
+    
+    formData.append('username', global.username);
+    formData.append('description', 'testtesttes');
+    
+    let options = {
+      method: AppConfig.POST,
+      body: formData,
+      headers: {
+        Accept: AppConfig.APPLICATION_TYPE_JSON,
+        'Content-Type': AppConfig.CONTENT_MULTIPART_FORM_DATA,
+      },
+    };
+    
+    return fetch(photoUploadUrl, options);
+  }    
 }

@@ -67,10 +67,12 @@ export default class LoginScreen extends React.Component {
     }
   }
   
-  async validateUserCredentials(jsonResponse) {    
-    console.log('validate user credentials');        
+  async validateUserCredentials(jsonResponse) {  
+   
     if (jsonResponse && jsonResponse.status == "true") {
+      global.username = jsonResponse.username;
       this.navigateHome();
+
     }
     else {
       // message and prompt user //
