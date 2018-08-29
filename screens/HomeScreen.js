@@ -37,9 +37,9 @@ export default class HomeScreen extends React.Component {
 
     console.log('globalusername', global.username);
 
-    // if (status === false) {
-    //   this.props.navigation.navigate('LoginScreen');
-    // }
+    if (!global.username) {
+        this.props.navigation.navigate('LoginScreen');
+     }
     
     //  db.transaction(tx => {
     //   tx.executeSql(
