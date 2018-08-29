@@ -12,16 +12,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem } from 'react-native-elements';
-
-// const SectionHeader = ({ title }) => {
-//     return (
-//       <View style={styles.sectionHeaderContainer}>
-//         <Text style={styles.sectionHeaderText}>
-//           {title}
-//         </Text>
-//       </View>
-//     );
-//   };  
+import { ActivitySpinner } from '../shared/ActivitySpinner';
 
 export default class PhotoListScreen extends React.Component {    
     
@@ -79,18 +70,17 @@ export default class PhotoListScreen extends React.Component {
         if (global.username) 
         {   
             let apiUri = "http://meetroomserver.azurewebsites.net/photo/user/" + global.username;
-           
+            
             try {
-
+                
                 this.setState({isBusy : true});
                 let response = await fetch(apiUri);
-                let responseJson = await response.json(); 
-            
-                console.log(responseJson);
+                let responseJson = await response.json();             
+                
                 this.setState({ 
                     data : responseJson
                 });
-
+                
                 return responseJson.articles;
             } catch (error) {                
                 console.error(error);
@@ -102,17 +92,13 @@ export default class PhotoListScreen extends React.Component {
         } 
     }   
     
-    // _renderSectionHeader = ({ section }) => {
-    //     return <SectionHeader title={section.title} />;
-    //  };
-    
-    render() {
+    render() {        
         
         return (
+            
             <View style={styles.containerSchedule}>  
             
-            <ActivityIndicator style={{ position : 'absolute', left: 0,  right: 0, top: 0, bottom: 0, alignItems: 'center',justifyContent: 'center'}}
-             animating={this.state.isBusy} color = '#0a1640' size = "large" /> 
+            <ActivitySpinner isBusy={this.state.isBusy} />
             
             <ScrollView refreshControl={
                 <RefreshControl

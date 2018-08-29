@@ -9,26 +9,27 @@ import { Icon, Button } from 'react-native-elements';
 import { AppConfig } from '../shared/AppConfig';
 import prompt from 'react-native-prompt-android';
 import Dialog from "react-native-dialog";
+import { ActivitySpinner } from '../shared/ActivitySpinner';
 
 export default class LoginScreen extends React.Component {
-    
+  
   static navigationOptions = {
     header: null,
   };
-
+  
   constructor(props) {   
-
+    
     super(props);  
-
+    
     this.state = { 
       username : 'username', 
       password : 'password',
       loading : false
-     };  
-   }
-
+    };  
+  }
+  
   componentDidMount() {
-     
+    
   }
   
   async navigateHome() {   
@@ -36,11 +37,11 @@ export default class LoginScreen extends React.Component {
   }
   
   async authenticate(username, password) { 
-
+    
     this.setState({loading : true});
-
+    
     if (username && password) {
-
+      
       let apiUri = AppConfig.AUTHENTICATION_URL;
       
       try {
@@ -76,67 +77,59 @@ export default class LoginScreen extends React.Component {
     }
   }
   
-  
   render() {
-
+    
     return (
       
       <View style={styles.container}>
       
-        <ActivityIndicator style={{ position : 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            alignItems: 'center',
-            justifyContent: 'center'
-        }} animating={true} color = '#bc2b78' size = "large" />
-          
-      <ScrollView style={styles.topLoginContainer}>
+      <ActivitySpinner isBusy={this.state.loading} />
+    
+    <ScrollView style={styles.topLoginContainer}>
+    
+    <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
+    <Text style={styles.tabBarInfoText}>Let's get personal</Text>
+    
+    <View style={styles.viewButton}>      
+    
+    <TextInput
+    style={{height: 40, color: '#fff'}}
+    placeholder="Username"
+    onChangeText={(text) => this.setState({username : text})} 
+    />
+    
+    <TextInput secureTextEntry={true} 
+    style={{height: 40,  color: '#fff'}}
+    placeholder="Password"
+    onChangeText={(text) => this.setState({password : text})}
+    />
+    
+    <View style={styles.containerLoginButton}> 
+    <Button style={styles.defaultButton} buttonStyle={{
+      borderRadius: 5, backgroundColor: "#394dcf"
+    }} onPress={() => {     
       
-        <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
-        <Text style={styles.tabBarInfoText}>Let's get personal</Text>
-                  
-          <View style={styles.viewButton}>      
-          
-                <TextInput
-                style={{height: 40, color: '#fff'}}
-                placeholder="Username"
-                onChangeText={(text) => this.setState({username : text})} 
-                />
-                
-                <TextInput secureTextEntry={true} 
-                style={{height: 40,  color: '#fff'}}
-                placeholder="Password"
-                onChangeText={(text) => this.setState({password : text})}
-                />
-          
-              <View style={styles.containerLoginButton}> 
-              <Button style={styles.defaultButton} buttonStyle={{
-                borderRadius: 5, backgroundColor: "#394dcf"
-              }} onPress={() => {     
-                
-                this.authenticate(this.state.username, this.state.password);
-                
-              }} title="Login" accessibilityLabel="Learn more about this purple button"
-              />               
-              </View>
-          
-          </View>           
+      this.authenticate(this.state.username, this.state.password);
       
-      
-      </ScrollView>
-            
-      <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
-      
-      <View>
-        <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
-      </View>
-      
-      </ScrollView>    
-      
-      </View>
-    );
-  }    
+    }} title="Login" accessibilityLabel="Learn more about this purple button"
+    />               
+    </View>
+    
+    </View>           
+    
+    
+    </ScrollView>
+    
+    <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
+    
+    <View>
+    <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
+    </View>
+    
+    </ScrollView>    
+    
+    </View>
+  );
+}    
 }
 
