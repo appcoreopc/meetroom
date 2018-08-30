@@ -13,6 +13,7 @@ import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, List, ListItem } from 'react-native-elements';
 import { ActivitySpinner } from '../shared/ActivitySpinner';
+import { IconImageDisplay } from '../shared/IconImageDisplay';
 
 export default class PhotoListScreen extends React.Component {    
     
@@ -22,6 +23,7 @@ export default class PhotoListScreen extends React.Component {
             shadowOpacity: 0
         }
     };
+    
     
     list = [
         {
@@ -126,36 +128,28 @@ export default class PhotoListScreen extends React.Component {
                     
                     rightIcon={
                         <View>               
-                        <Image style={{ borderWidth:1,
-                            borderColor:'rgba(0,0,0,0.2)',
-                            alignItems:'center',
-                            justifyContent:'center',
-                            width:40, marginBottom : 5,
-                            height:40,
-                            backgroundColor:'#fff',
-                            borderRadius:100}} source={{uri: l.url}} />                   
-                            <Text style={{fontSize:9, color:'#394DCF', paddingRight : 12}}>See Details</Text> 
-                            </View>   
-                        }                
-                        onPress={()=> { 
-                            console.log('going into detail screen');
-                            this.props.navigation.navigate('DetailScreen', {
-                                description : l.description, 
-                                url : l.url
-                            });
-                        }}
-                        
-                        />     
-                    ))                    
-                }
-                
-                </List>  
-                
-                </ScrollView>
-                
-                </View>
-            );
-        }       
-    }
-    
-    
+                        <IconImageDisplay uriPath={l.url} />
+                        <Text style={{fontSize:9, color:'#394DCF', paddingRight : 12}}>See Details</Text> 
+                        </View>   
+                    }                
+                    onPress={()=> { 
+                        console.log('going into detail screen');
+                        this.props.navigation.navigate('DetailScreen', {
+                            description : l.description, 
+                            url : l.url
+                        });
+                    }}
+                    
+                    />     
+                ))                    
+            }
+            
+            </List>  
+            
+            </ScrollView>
+            
+            </View>
+        );
+    }       
+}
+
