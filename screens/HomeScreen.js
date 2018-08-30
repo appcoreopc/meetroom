@@ -23,7 +23,8 @@ export default class HomeScreen extends React.Component {
     this.state = { 
       showPrompt : false,
       photoUri : '', 
-      photoDescripton : ''
+      photoDescripton : '',
+      photoPickerResult : false
     };   
   }  
   
@@ -94,13 +95,13 @@ export default class HomeScreen extends React.Component {
       <Dialog.Container visible={this.state.showPrompt}>
       <Dialog.Title>Take a photo</Dialog.Title>
       <Dialog.Description>
-      Tell us about what your photo about?
+        Tell us about what's your photo about?
       </Dialog.Description>
       
       <Dialog.Input label="Photo description" onChangeText={(text) => this.setState({photoDescripton : text})}  />
       
       <Dialog.Button label="Ok" onPress={() => { 
-        this.takePhoto();
+        this.startSend();
       }}
       />
       
@@ -128,7 +129,7 @@ export default class HomeScreen extends React.Component {
         borderRadius: 5, backgroundColor: "#394dcf"
       }} onPress={() => 
         {
-          this.beginSend();
+          this.takePhoto();
         }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
         />               
         </View>     
@@ -136,22 +137,12 @@ export default class HomeScreen extends React.Component {
         </View>
       );
     } 
-    
-    
-    beginSend = async () => {
-      this.setState({showPrompt : true});
-    }
-    
+       
+      
     takePhoto = async () => { 
       
       this.setState({showPrompt : false});
-      
-      console.log('takephoto state', this.state);
-      
-     // let handleImagePicked = this._handleImagePicked;
-      
-     // console.log(handleImagePicked);
-      
+          
       const {
         status: cameraPerm
       } = await Permissions.askAsync(Permissions.CAMERA);
@@ -173,46 +164,66 @@ export default class HomeScreen extends React.Component {
     
     _handleImagePicked = async pickerResult => {
       
-      console.log('_handleImagePicked', this.state);
-         
-      let uploadResponse, uploadResult;
-         
+      console.log('_handleImagePicked', this.state);      
+      try 
+      {
+        this.setState({
+          uploading: true,
+          photoPickerResult : pickerResult
+        });
+
+        if (!pickerResult.cancelled) {   
+          
+          this.setState({
+            showPrompt: true           
+          });           
+        }
+      } 
+      catch (e) {       
+        console.log(e);  
+      } 
+      
+    }; 
+    
+    startSend = async() => {
+      
+      let uploadResponse, uploadResult;   
+
       try {
+        
         this.setState({
           uploading: true        
         });
         
-        if (!pickerResult.cancelled) {
-          
+        if (!this.state.photoPickerResult.cancelled) {          
+     
           console.log('photoiinfo', this.state.photoDescripton);
-          uploadResponse = await this.uploadImageAsync(this.state.photoDescripton, pickerResult.uri);
+          console.log('photoresult', this.state.photoPickerResult);
+
+          uploadResponse = await this.uploadImageAsync(this.state.photoDescripton, this.state.photoPickerResult.uri);
           uploadResult = await uploadResponse.json();
           
           this.setState({
             image: uploadResult.location
-          });
+          });       
           
-          this.setState({
-            image: uploadResult.location
-          });
         }
       } catch (e) {
         console.log({ uploadResponse });
         console.log({ uploadResult });
-        console.log({ e });  
-      } finally {
+        console.log(e);  
+      } 
+      finally {
         this.setState({
-          uploading: false
+          uploading: false,
+          showPrompt : false
         });
       }
-      
-      
-    };  
+    }
     
     async uploadImageAsync(description, uri) {      
       
-      console.log('uploading my image from camera' + uri)
-      
+      console.log('uploading my image from camera' + uri);      
       let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
       
       // Note:
@@ -224,7 +235,6 @@ export default class HomeScreen extends React.Component {
       //   apiUrl = `http://localhost:3000/upload`
       // }
       console.log('photo camera path', uri);
-      
       
       let uriParts = uri.split('.');
       let fileType = uriParts[uriParts.length - 1];
