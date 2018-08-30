@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component {
   }  
   
   async componentDidMount() { 
-
+    
     // console.log('query db...');
     // var d = new MeetroomDb(); 
     // let status = await d.checkUserRegistered();
@@ -36,12 +36,12 @@ export default class HomeScreen extends React.Component {
     // console.log('a state ' + status);
     //global.username = 'mark';
     //status = true;
-
+    
     console.log('globalusername', global.username);
-
+    
     if (!global.username) {
-        this.props.navigation.navigate('LoginScreen');
-     }
+      this.props.navigation.navigate('LoginScreen');
+    }
     
     //  db.transaction(tx => {
     //   tx.executeSql(
@@ -94,19 +94,22 @@ export default class HomeScreen extends React.Component {
       <Dialog.Container visible={this.state.showPrompt}>
       <Dialog.Title>Take a photo</Dialog.Title>
       <Dialog.Description>
-        Tell us about what your photo about?
+      Tell us about what your photo about?
       </Dialog.Description>
       
       <Dialog.Input label="Photo description" onChangeText={(text) => this.setState({photoDescripton : text})}  />
-     
-      <Dialog.Button label="Ok" onPress={(this._takePhoto)} />
-
+      
+      <Dialog.Button label="Ok" onPress={() => { 
+        this.takePhoto();
+      }}
+      />
+      
       <Dialog.Button label="Cancel" onPress={() => {       
         this.setState({showPrompt : false});
       }} />
       </Dialog.Container>
       
-            
+      
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
@@ -123,130 +126,132 @@ export default class HomeScreen extends React.Component {
       <View style={styles.viewButton}> 
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5, backgroundColor: "#394dcf"
-      }} onPress={this.beginSend} title="Take Photo" accessibilityLabel="Learn more about this purple button"
-      />               
-      </View>     
-      
-      </View>
-    );
-  } 
-
-
-  beginSend = async () => {
-    this.setState({showPrompt : true});
-  }
-
-  _takePhoto = async () => { 
-
-    this.setState({showPrompt : false});
-
-    console.log(this.state);
+      }} onPress={() => 
+        {
+          this.beginSend();
+        }} title="Take Photo" accessibilityLabel="Learn more about this purple button"
+        />               
+        </View>     
+        
+        </View>
+      );
+    } 
     
-    let handleImagePicked = this._handleImagePicked;
-
-    console.log(handleImagePicked);
-
-    const {
-      status: cameraPerm
-    } = await Permissions.askAsync(Permissions.CAMERA);
     
-    const {
-      status: cameraRollPerm
-    } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    
-    // only if user allows permission to camera AND camera roll
-    if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
-      let pickerResult = await ImagePicker.launchCameraAsync({
-        //allowsEditing: true,
-        //aspect: [4, 3],
-      });
-      
-      let result = await handleImagePicked(pickerResult);
+    beginSend = async () => {
+      this.setState({showPrompt : true});
     }
-  };
-  
-  _handleImagePicked = async pickerResult => {
     
-    let uploadResponse, uploadResult;
-    let sendImageToServer = this.sendImageToServer;
-    let uploadImageAsync = this.uploadImageAsync;
-    
-    try {
-      this.setState({
-        uploading: true        
-      });
+    takePhoto = async () => { 
       
-      if (!pickerResult.cancelled) {
-        
-        console.log('photoiinfo', this.state.photoDescripton);
-        uploadResponse = await uploadImageAsync(this.state.photoDescripton, pickerResult.uri);
-        uploadResult = await uploadResponse.json();
-        
-        this.setState({
-          image: uploadResult.location
+      this.setState({showPrompt : false});
+      
+      console.log('takephoto state', this.state);
+      
+     // let handleImagePicked = this._handleImagePicked;
+      
+     // console.log(handleImagePicked);
+      
+      const {
+        status: cameraPerm
+      } = await Permissions.askAsync(Permissions.CAMERA);
+      
+      const {
+        status: cameraRollPerm
+      } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      
+      // only if user allows permission to camera AND camera roll
+      if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
+        let pickerResult = await ImagePicker.launchCameraAsync({
+          //allowsEditing: true,
+          //aspect: [4, 3],
         });
-       
-        this.setState({
-          image: uploadResult.location
-        });
+        
+        let result = await this._handleImagePicked(pickerResult);
       }
-    } catch (e) {
-      console.log({ uploadResponse });
-      console.log({ uploadResult });
-      console.log({ e });  
-    } finally {
-      this.setState({
-        uploading: false
-      });
-    }
-
-
-  };  
-  
-  async uploadImageAsync(description, uri) {
-
-   
-    console.log('uploading my image from camera' + uri)
-    
-    let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
-    
-    // Note:
-    // Uncomment this if you want to experiment with local server
-    //
-    // if (Constants.isDevice) {
-    //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
-    // } else {
-    //   apiUrl = `http://localhost:3000/upload`
-    // }
-    console.log('photo camera path', uri);
-
-
-    let uriParts = uri.split('.');
-    let fileType = uriParts[uriParts.length - 1];
-    
-    console.log('data file name');
-    console.log(fileType);
-    
-    let formData = new FormData();
-    
-    formData.append('image', {
-      uri,
-      name: 'photo.' + fileType, 
-      type: 'image/' + fileType
-    });
-    
-    formData.append('username', global.username);
-    formData.append('description', description);
-    
-    let options = {
-      method: AppConfig.POST,
-      body: formData,
-      headers: {
-        Accept: AppConfig.APPLICATION_TYPE_JSON,
-        'Content-Type': AppConfig.CONTENT_MULTIPART_FORM_DATA,
-      },
     };
     
-    return fetch(photoUploadUrl, options);
-  }    
-}
+    _handleImagePicked = async pickerResult => {
+      
+      console.log('_handleImagePicked', this.state);
+         
+      let uploadResponse, uploadResult;
+         
+      try {
+        this.setState({
+          uploading: true        
+        });
+        
+        if (!pickerResult.cancelled) {
+          
+          console.log('photoiinfo', this.state.photoDescripton);
+          uploadResponse = await this.uploadImageAsync(this.state.photoDescripton, pickerResult.uri);
+          uploadResult = await uploadResponse.json();
+          
+          this.setState({
+            image: uploadResult.location
+          });
+          
+          this.setState({
+            image: uploadResult.location
+          });
+        }
+      } catch (e) {
+        console.log({ uploadResponse });
+        console.log({ uploadResult });
+        console.log({ e });  
+      } finally {
+        this.setState({
+          uploading: false
+        });
+      }
+      
+      
+    };  
+    
+    async uploadImageAsync(description, uri) {      
+      
+      console.log('uploading my image from camera' + uri)
+      
+      let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
+      
+      // Note:
+      // Uncomment this if you want to experiment with local server
+      //
+      // if (Constants.isDevice) {
+      //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+      // } else {
+      //   apiUrl = `http://localhost:3000/upload`
+      // }
+      console.log('photo camera path', uri);
+      
+      
+      let uriParts = uri.split('.');
+      let fileType = uriParts[uriParts.length - 1];
+      
+      console.log('data file name');
+      console.log(fileType);
+      
+      let formData = new FormData();
+      
+      formData.append('image', {
+        uri,
+        name: 'photo.' + fileType, 
+        type: 'image/' + fileType
+      });
+      
+      formData.append('username', global.username);
+      formData.append('description', description);
+      
+      let options = {
+        method: AppConfig.POST,
+        body: formData,
+        headers: {
+          Accept: AppConfig.APPLICATION_TYPE_JSON,
+          'Content-Type': AppConfig.CONTENT_MULTIPART_FORM_DATA,
+        },
+      };
+      
+      return fetch(photoUploadUrl, options);
+    }    
+  }
