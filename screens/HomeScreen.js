@@ -21,7 +21,9 @@ export default class HomeScreen extends React.Component {
   constructor(props) {         
     super(props);      
     this.state = { 
-      showPrompt : false
+      showPrompt : false,
+      photoUri : '', 
+      photoDescripton : ''
     };   
   }  
   
@@ -90,21 +92,21 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
       
       <Dialog.Container visible={this.state.showPrompt}>
-      <Dialog.Title>Account delete</Dialog.Title>
+      <Dialog.Title>Take a photo</Dialog.Title>
       <Dialog.Description>
-      Do you want to delete this account? You cannot undo this action.
+        Tell us about what your photo about?
       </Dialog.Description>
       
-      <Dialog.Input label="Cancel" onChangeText={(text) => this.setState({username : text})}  />
-      
-      <Dialog.Button label="Delete" onPress={() => {
-        console.log(this.state.username);
+      <Dialog.Input label="Photo description" onChangeText={(text) => this.setState({photoDescripton : text})}  />
+     
+      <Dialog.Button label="Ok" onPress={(this._takePhoto)} />
+
+      <Dialog.Button label="Cancel" onPress={() => {       
         this.setState({showPrompt : false});
       }} />
       </Dialog.Container>
       
-      
-      
+            
       <ScrollView style={styles.blueContainer} contentContainerStyle={styles.contentContainer}>
       
       <View>
@@ -121,16 +123,29 @@ export default class HomeScreen extends React.Component {
       <View style={styles.viewButton}> 
       <Button style={styles.defaultButton} buttonStyle={{
         borderRadius: 5, backgroundColor: "#394dcf"
-      }} onPress={this._takePhoto} title="Take Photo" accessibilityLabel="Learn more about this purple button"
+      }} onPress={this.beginSend} title="Take Photo" accessibilityLabel="Learn more about this purple button"
       />               
       </View>     
       
       </View>
     );
   } 
-  
-  _takePhoto = async () => {        
+
+
+  beginSend = async () => {
+    this.setState({showPrompt : true});
+  }
+
+  _takePhoto = async () => { 
+
+    this.setState({showPrompt : false});
+
+    console.log(this.state);
     
+    let handleImagePicked = this._handleImagePicked;
+
+    console.log(handleImagePicked);
+
     const {
       status: cameraPerm
     } = await Permissions.askAsync(Permissions.CAMERA);
@@ -146,7 +161,7 @@ export default class HomeScreen extends React.Component {
         //aspect: [4, 3],
       });
       
-      this._handleImagePicked(pickerResult);
+      let result = await handleImagePicked(pickerResult);
     }
   };
   
@@ -163,7 +178,8 @@ export default class HomeScreen extends React.Component {
       
       if (!pickerResult.cancelled) {
         
-        uploadResponse = await uploadImageAsync(pickerResult.uri);
+        console.log('photoiinfo', this.state.photoDescripton);
+        uploadResponse = await uploadImageAsync(this.state.photoDescripton, pickerResult.uri);
         uploadResult = await uploadResponse.json();
         
         this.setState({
@@ -183,19 +199,13 @@ export default class HomeScreen extends React.Component {
         uploading: false
       });
     }
-  };  
 
+
+  };  
   
-  async sendImageToServer(uploadImageAsync, pickerResult) { 
-    
-    console.log('sending image to server');
-    uploadResponse = await uploadImageAsync(pickerResult.uri);
-    uploadResult = await uploadResponse.json();
-    
-  }
-  
-  async uploadImageAsync(uri) {
-    
+  async uploadImageAsync(description, uri) {
+
+   
     console.log('uploading my image from camera' + uri)
     
     let photoUploadUrl = AppConfig.PHOTO_UPLOAD_URL;
@@ -226,7 +236,7 @@ export default class HomeScreen extends React.Component {
     });
     
     formData.append('username', global.username);
-    formData.append('description', 'testtesttes');
+    formData.append('description', description);
     
     let options = {
       method: AppConfig.POST,
