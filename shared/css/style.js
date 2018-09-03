@@ -72,6 +72,13 @@ export const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
   },
+
+  statusMessageText: {   
+    color: '#fff',
+    fontSize: 14,
+    lineHeight: 19,
+    textAlign: 'center',
+  },
   contentContainer: {    
     justifyContent: 'center', alignItems: 'center'
   },

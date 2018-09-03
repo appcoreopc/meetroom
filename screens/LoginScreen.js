@@ -24,7 +24,8 @@ export default class LoginScreen extends React.Component {
     this.state = { 
       username : 'username', 
       password : 'password',
-      loading : false
+      loading : false,
+      message : ''
     };  
   }
   
@@ -72,10 +73,10 @@ export default class LoginScreen extends React.Component {
     if (jsonResponse && jsonResponse.status == "true") {
       global.username = jsonResponse.username;
       this.navigateHome();
-
+      this.setState({message : 'Successfully login in'});
     }
     else {
-      // message and prompt user //
+      this.setState({message : 'Unable to sign in'});
     }
   }
   
@@ -105,6 +106,8 @@ export default class LoginScreen extends React.Component {
     placeholder="Password"
     onChangeText={(text) => this.setState({password : text})}
     />
+
+    <Text  style={styles.statusMessageText}> {this.state.message} </Text>
     
     <View style={styles.containerLoginButton}> 
     <Button style={styles.defaultButton} buttonStyle={{
@@ -116,6 +119,7 @@ export default class LoginScreen extends React.Component {
     }} title="Login" accessibilityLabel="Learn more about this purple button"
     />               
     </View>
+
     
     </View>           
     
