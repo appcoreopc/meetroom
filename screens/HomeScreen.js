@@ -100,8 +100,10 @@ export default class HomeScreen extends React.Component {
       
       <Dialog.Input label="Photo description" onChangeText={(text) => this.setState({photoDescripton : text})}  />
       
-      <Dialog.Button label="Ok" onPress={() => { 
-        this.startSend();
+      <Dialog.Button label="Upload Photo" onPress={() => { 
+       
+       this.startSend();
+
       }}
       />
       
