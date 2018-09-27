@@ -23,7 +23,7 @@ export default class PhotoListScreen extends React.Component {
             shadowOpacity: 0
         }
     };
-    
+
     
     list = [
         {
@@ -133,8 +133,7 @@ export default class PhotoListScreen extends React.Component {
                         </View>   
                     }                
                     onPress={()=> { 
-                        console.log('going into detail screen');
-                        this.props.navigation.navigate('DetailScreen', {
+                            this.props.navigation.navigate('DetailScreen', {
                             description : l.description, 
                             url : l.url
                         });

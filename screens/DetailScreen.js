@@ -29,11 +29,7 @@ export default class DetailScreen extends React.Component {
     };
   }  
   
-  async componentDidMount() {      
-    console.log(this.props.navigation.state.params);
-  } 
-    
-    render() {
+  render() {
    
       return (
         <View style={styles.container}>

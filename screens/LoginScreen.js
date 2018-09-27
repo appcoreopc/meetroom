@@ -27,14 +27,12 @@ export default class LoginScreen extends React.Component {
       loading : false,
       message : ''
     };  
-  }
+  }  
   
-  componentDidMount() {
-    
-  }
-  
-  async navigateHome() {   
+  navigateHome() {   
+
     this.props.navigation.navigate(AppConfig.HOMESCREEN);
+
   }
   
   async authenticate(username, password) { 
@@ -62,21 +60,20 @@ export default class LoginScreen extends React.Component {
         
       } catch (error) {
         console.error(error);
-      }  
-      
-      this.setState({loading : false});
+      }      
     }
   }
   
-  async validateUserCredentials(jsonResponse) {  
+  validateUserCredentials(jsonResponse) {  
    
     if (jsonResponse && jsonResponse.status == "true") {
       global.username = jsonResponse.username;
       this.navigateHome();
-      this.setState({message : 'Successfully login in'});
+      //this.setState({message : 'Successfully login in'});
     }
     else {
       this.setState({message : 'Unable to sign in'});
+      this.setState({loading : false});
     }
   }
   
@@ -84,53 +81,54 @@ export default class LoginScreen extends React.Component {
     
     return (
       
-      <View style={styles.container}>
+    <View style={styles.container}>
       
       <ActivitySpinner isBusy={this.state.loading} />
     
     <ScrollView style={styles.topLoginContainer}>
     
-    <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
-    <Text style={styles.tabBarInfoText}>Let's get personal</Text>
-    
-    <View style={styles.viewButton}>      
-    
-    <TextInput
-    style={{height: 40, color: '#fff'}}
-    placeholder="Username"
-    onChangeText={(text) => this.setState({username : text})} 
-    />
-    
-    <TextInput secureTextEntry={true} 
-    style={{height: 40,  color: '#fff'}}
-    placeholder="Password"
-    onChangeText={(text) => this.setState({password : text})}
-    />
+        <Text style={styles.tabBarInfoTextBold}> Please login   </Text> 
+        <Text style={styles.tabBarInfoText}>Let's get personal</Text>
+        
+        <View style={styles.viewButton}>      
+        
+        <TextInput
+        style={{height: 40, color: '#fff'}}
+        placeholder="Username"
+        onChangeText={(text) => this.setState({username : text})} 
+        />
+        
+        <TextInput secureTextEntry={true} 
+        style={{height: 40,  color: '#fff'}}
+        placeholder="Password"
+        onChangeText={(text) => this.setState({password : text})}
+        />
 
-    <Text  style={styles.statusMessageText}> {this.state.message} </Text>
-    
-    <View style={styles.containerLoginButton}> 
-    <Button style={styles.defaultButton} buttonStyle={{
-      borderRadius: 5, backgroundColor: "#394dcf"
-    }} onPress={() => {     
-      
-      this.authenticate(this.state.username, this.state.password);
-      
-    }} title="Login" accessibilityLabel="Learn more about this purple button"
-    />               
-    </View>
+        <Text  style={styles.statusMessageText}> {this.state.message} </Text>
+        
+        <View style={styles.containerLoginButton}> 
 
-    
-    </View>           
-    
+            <Button style={styles.defaultButton} buttonStyle={{
+              borderRadius: 5, backgroundColor: "#394dcf"
+            }} onPress={() => {     
+              
+              this.authenticate(this.state.username, this.state.password);
+              
+            }} title="Login" accessibilityLabel="Learn more about this purple button"
+            />         
+
+        </View>
+        
+        </View>           
+        
     
     </ScrollView>
     
     <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
     
-    <View>
-    <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
-    </View>
+      <View>
+          <Icon name='lock' type='font-awesome' color='#517fa4' size={200} />             
+      </View>
     
     </ScrollView>    
     

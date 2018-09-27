@@ -5,5 +5,6 @@ export const AppConfig = {
     PHOTO_UPLOAD_URL : 'https://meetroomserver.azurewebsites.net/photo',
     APPLICATION_TYPE_JSON : 'application/json',
     CONTENT_MULTIPART_FORM_DATA : 'multipart/form-data',
-    HEADERS_CONTENT_TYPE : 'Content-Type'
+    HEADERS_CONTENT_TYPE : 'Content-Type', 
+    DETAIL_SCREEN : 'DetailScreen'
 }

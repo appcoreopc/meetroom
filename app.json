@@ -24,7 +24,8 @@
       "supportsTablet": true
     },
     "android" : {
-      "package" : "com.airbeltech.meetroom"
+      "package" : "com.airbeltech.meetroom",
+      "icon" : "./assets/images/icon.png"
     }
   }
  
