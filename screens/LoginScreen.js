@@ -2,14 +2,11 @@ import React from 'react';
 import {
   ActivityIndicator, ScrollView, TextInput, Text, View
 } from 'react-native';
-import { Constants, ImagePicker, Permissions } from 'expo';
-import { MonoText } from '../components/StyledText';
 import { styles } from '../shared/css/style';
 import { Icon, Button } from 'react-native-elements';
 import { AppConfig } from '../shared/AppConfig';
-import prompt from 'react-native-prompt-android';
-import Dialog from "react-native-dialog";
 import { ActivitySpinner } from '../shared/ActivitySpinner';
+import { UNABLE_SIGNON_MESSAGE, LOGIN_TXT, LOGIN_ACCESSIBILITY_TXT, DEFAULT_USERNAME_TXT,  DEFAULT_PASSWORD_TXT } from '../constants/AppConstant';
 
 export default class LoginScreen extends React.Component {
   
@@ -22,23 +19,21 @@ export default class LoginScreen extends React.Component {
     super(props);  
     
     this.state = { 
-      username : 'username', 
-      password : 'password',
+      username : DEFAULT_USERNAME_TXT, 
+      password : DEFAULT_PASSWORD_TXT,
       loading : false,
       message : ''
     };  
   }  
   
   navigateHome() {   
-
     this.props.navigation.navigate(AppConfig.HOMESCREEN);
-
   }
   
   async authenticate(username, password) { 
-    
-    this.setState({loading : true});
-    
+          
+    console.log('logging in', username, password);
+
     if (username && password) {
       
       let apiUri = AppConfig.AUTHENTICATION_URL;
@@ -59,7 +54,8 @@ export default class LoginScreen extends React.Component {
         this.validateUserCredentials(responses);
         
       } catch (error) {
-        console.error(error);
+        this.setState({loading : false});
+        console.error(error);        
       }      
     }
   }
@@ -67,12 +63,11 @@ export default class LoginScreen extends React.Component {
   validateUserCredentials(jsonResponse) {  
    
     if (jsonResponse && jsonResponse.status == "true") {
-      global.username = jsonResponse.username;
-      this.navigateHome();
-      //this.setState({message : 'Successfully login in'});
+      global.username = jsonResponse.username;      
+      this.navigateHome();    
     }
     else {
-      this.setState({message : 'Unable to sign in'});
+      this.setState({message : UNABLE_SIGNON_MESSAGE});
       this.setState({loading : false});
     }
   }
@@ -82,8 +77,7 @@ export default class LoginScreen extends React.Component {
     return (
       
     <View style={styles.container}>
-      
-      <ActivitySpinner isBusy={this.state.loading} />
+            
     
     <ScrollView style={styles.topLoginContainer}>
     
@@ -91,37 +85,42 @@ export default class LoginScreen extends React.Component {
         <Text style={styles.tabBarInfoText}>Let's get personal</Text>
         
         <View style={styles.viewButton}>      
-        
+       
         <TextInput
         style={{height: 40, color: '#fff'}}
-        placeholder="Username"
+        placeholder={DEFAULT_USERNAME_TXT}
         onChangeText={(text) => this.setState({username : text})} 
         />
         
         <TextInput secureTextEntry={true} 
         style={{height: 40,  color: '#fff'}}
-        placeholder="Password"
-        onChangeText={(text) => this.setState({password : text})}
+        placeholder={DEFAULT_PASSWORD_TXT} onChangeText={(text) => this.setState({password : text})}
         />
 
         <Text  style={styles.statusMessageText}> {this.state.message} </Text>
-        
+      
         <View style={styles.containerLoginButton}> 
-
+              
             <Button style={styles.defaultButton} buttonStyle={{
               borderRadius: 5, backgroundColor: "#394dcf"
             }} onPress={() => {     
-              
+             
+              this.setState({loading : true});              
               this.authenticate(this.state.username, this.state.password);
               
-            }} title="Login" accessibilityLabel="Learn more about this purple button"
+            }} title={LOGIN_TXT} accessibilityLabel={LOGIN_ACCESSIBILITY_TXT}
             />         
 
         </View>
+
+          {this.state.loading &&
+                  <View style={styles.loading}>
+                      <ActivitySpinner isBusy={this.state.loading} />
+                  </View>
+          } 
         
-        </View>           
+        </View>         
         
-    
     </ScrollView>
     
     <ScrollView style={styles.bottomLoginContainer} contentContainerStyle={styles.contentContainer}>
@@ -134,6 +133,6 @@ export default class LoginScreen extends React.Component {
     
     </View>
   );
-}    
+ }    
 }
 
